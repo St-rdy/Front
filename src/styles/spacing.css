@@ -1,0 +1,49 @@
+/* 
+    Spacing 
+    프로젝트의 여백(margin, padding, gap) 시스템을 정의합니다.
+*/
+
+:root {
+  /* Base Spacing Unit */
+  --spacing-unit: 1px;
+
+  /* Spacing Scale */
+  --spacing-0: 0;
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-25: 25px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+
+  /* Semantic Spacing */
+  --spacing-main-padding: 16px;
+  --spacing-gap-default: 25px;
+  --spacing-gap-small: 12px;
+  --spacing-gap-large: 32px;
+
+  /* Component Spacing */
+  --spacing-section-padding: 16px;
+  --spacing-item-gap: 25px;
+  --spacing-card-padding: 16px;
+  --spacing-button-padding-x: 24px;
+  --spacing-button-padding-y: 12px;
+}
+
+/* Utility Classes (Optional) */
+.container {
+  padding: var(--spacing-main-padding);
+}
+
+.gap-default {
+  gap: var(--spacing-gap-default);
+}
+
+.gap-small {
+  gap: var(--spacing-gap-small);
+}
