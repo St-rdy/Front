@@ -1,0 +1,8 @@
+/* 기본 브라우저 초기화 */
+@import './reset.css';
+/* 색상 시스템 */
+@import './colors.css';
+/* 타이포그래피 시스템 */
+@import './typography.css';
+/* 여백 시스템 */
+@import './spacing.css';
