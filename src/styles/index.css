@@ -22,3 +22,10 @@ body {
   width: 100%;
   background-color: var(--color-bg-primary);
 }
+
+@media (max-width: 768px) {
+  .footer-container {
+    max-width: 100%;
+    left: 0;
+  }
+}
