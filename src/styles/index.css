@@ -6,3 +6,19 @@
 @import './typography.css';
 /* 여백 시스템 */
 @import './spacing.css';
+
+#root {
+  max-width: 24.375rem; /* 390px */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 0 auto;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background-color: var(--color-bg-primary);
+}
