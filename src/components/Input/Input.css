@@ -1,0 +1,40 @@
+@import '/src/styles/index.css';
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  width: 100%;
+}
+
+.input-container label {
+  font-size: var(--font-size-label);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-regular);
+}
+
+.input-wrapper {
+  position: relative; /* 버튼과 글자 위치를 절대 위치로 조정 */
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+.input {
+  width: 100%;
+  padding: var(--spacing-main-padding);
+  font-size: var(--font-size-button);
+  color: var(--color-gray-300);
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--spacing-12);
+}
+
+.input::placeholder {
+  color: var(--color-gray-300);
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
