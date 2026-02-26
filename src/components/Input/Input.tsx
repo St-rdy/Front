@@ -1,15 +1,20 @@
 // Input.tsx
 
 // forwardRef를 사용하여 부모 컴포넌트에서 자식 컴포넌트의 ref에 접근할 수 있도록 함
-import { forwardRef } from 'react'
+import React, { forwardRef } from 'react'
 import type { InputProps } from './Input.types'
 import './Input.css'
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(
+export const Input = forwardRef<
+  HTMLInputElement | HTMLTextAreaElement,
+  InputProps
+>(
   (
     {
       label, // label로 입력 필드에 대한 설명
       error, // 에러가 발생 했을 때 표시할 메세지
+      type = 'text', // input 타입
+      multiline = false, // 여러 줄 입력 여부
       rightAction, // 오른쪽 중복 확인 버튼
       isInvalid = false, // 입력값이 유효한가
       isRequired = false, // 필수 입력 여부
@@ -36,21 +41,32 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         <div className={`input-container ${className}`}>
           {label && <label>{label}</label>}
           <div className="input-wrapper">
-            <input
-              ref={ref}
-              //   상태에 따라 input 클래스의 스타일을 적용
-              className={inputClassName}
-              required={isRequired}
-              aria-invalid={isInvalid}
-              {...rest}
-            />
+            {multiline ? (
+              <textarea
+                ref={ref as React.Ref<HTMLTextAreaElement>}
+                className={`input input-lg ${inputClassName}`}
+                {...(rest as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
+              ></textarea>
+            ) : (
+              <input
+                ref={ref as React.Ref<HTMLInputElement>}
+                //   상태에 따라 input 클래스의 스타일을 적용
+                className={inputClassName}
+                required={isRequired}
+                aria-invalid={isInvalid}
+                type={type}
+                {...(rest as React.InputHTMLAttributes<HTMLInputElement>)}
+              />
+            )}
             {rightAction && (
               <button
                 type="button"
                 className="input-action-button"
                 onClick={rightAction.onClick}
                 disabled={rightAction.loading}
-              ></button>
+              >
+                {rightAction.label}
+              </button>
             )}
             {error && <p className="input-error">{error}</p>}
           </div>

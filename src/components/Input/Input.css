@@ -4,7 +4,10 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-8);
-  width: 100%;
+  border: 1px solid var(--color-gray-500);
+  border-radius: var(--spacing-12);
+  padding: var(--spacing-main-padding);
+  margin: var(--spacing-main-padding);
 }
 
 .input-container label {
@@ -14,7 +17,6 @@
 }
 
 .input-wrapper {
-  position: relative; /* 버튼과 글자 위치를 절대 위치로 조정 */
   display: flex;
   align-items: center;
   gap: var(--spacing-8);
@@ -22,19 +24,32 @@
 
 .input {
   width: 100%;
-  padding: var(--spacing-main-padding);
   font-size: var(--font-size-button);
-  color: var(--color-gray-300);
+  color: var(--color-gray-500);
   background-color: var(--color-bg-primary);
-  border: 1px solid var(--color-gray-300);
-  border-radius: var(--spacing-12);
+}
+
+.input-lg {
+  height: 9rem;
+  display: flex;
+  flex-direction: column;
+  vertical-align: top;
+}
+.input-lg::placeholder {
+  vertical-align: top;
 }
 
 .input::placeholder {
-  color: var(--color-gray-300);
+  color: var(--color-gray-500);
 }
 
-.input:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+.input-action-button {
+  font-size: 0.6rem;
+  width: 4rem;
+  color: var(--color-gray-500);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  padding: var(--spacing-4);
+  border: 0.5px solid var(--color-gray-500);
+  border-radius: var(--spacing-8);
 }

@@ -1,12 +1,11 @@
-import type { InputHTMLAttributes } from 'react'
+import type { InputHTMLAttributes, TextareaHTMLAttributes } from 'react'
 
-export interface InputProps extends Omit<
-  InputHTMLAttributes<HTMLInputElement>,
-  'size'
-> {
+export interface BaseInputProps {
   // 기본 props
   label?: string
   error?: string
+  type: string
+  multiline: boolean
 
   // 오른쪽 액션 버튼 (중복 확인)
   rightAction?: {
@@ -23,3 +22,13 @@ export interface InputProps extends Omit<
   variant?: 'outline' | 'filled' | 'flushed' | 'unstyled'
   size?: 'sm' | 'md' | 'lg'
 }
+
+export type InputProps = BaseInputProps &
+  (
+    | (Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> & {
+        multiline?: false
+      })
+    | (Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'size'> & {
+        multiline: true
+      })
+  )
