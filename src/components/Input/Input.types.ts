@@ -4,7 +4,7 @@ export interface BaseInputProps {
   // 기본 props
   label?: string
   error?: string
-  type: string
+  type?: string
   multiline: boolean
 
   // 오른쪽 액션 버튼 (중복 확인)

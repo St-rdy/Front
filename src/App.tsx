@@ -35,6 +35,7 @@ function App() {
         size="lg"
         multiline={true}
       />
+      <Input error="에러 메시지" multiline={false} />
       <Footer />
     </>
   )

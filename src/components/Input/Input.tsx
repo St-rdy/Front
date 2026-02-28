@@ -39,6 +39,7 @@ export const Input = forwardRef<
       <>
         {/* 전체 버튼 클래스 */}
         <div className={`input-container ${className}`}>
+          <div>{error && <p className="input-error">{error}</p>}</div>
           {label && <label>{label}</label>}
           <div className="input-wrapper">
             {multiline ? (
@@ -68,7 +69,6 @@ export const Input = forwardRef<
                 {rightAction.label}
               </button>
             )}
-            {error && <p className="input-error">{error}</p>}
           </div>
         </div>
       </>

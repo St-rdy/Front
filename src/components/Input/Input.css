@@ -10,6 +10,10 @@
   margin: var(--spacing-main-padding);
 }
 
+.input-container:focus-within {
+  border-color: var(--color-primary);
+}
+
 .input-container label {
   font-size: var(--font-size-label);
   color: var(--color-text-primary);
@@ -52,4 +56,13 @@
   padding: var(--spacing-4);
   border: 0.5px solid var(--color-gray-500);
   border-radius: var(--spacing-8);
+}
+
+.input-error {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-error);
+  font-size: 0.875rem;
+  justify-content: center;
+  align-items: center;
 }
