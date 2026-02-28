@@ -1,5 +1,6 @@
 import Footer from './layouts/Footer/Footer'
 import { Input } from './components/Input'
+import { Modal } from './components/Modal'
 
 function App() {
   return (
@@ -36,6 +37,16 @@ function App() {
         multiline={true}
       />
       <Input error="에러 메시지" multiline={false} />
+      <Modal
+        isOpen={true}
+        onClose={() => {}}
+        title="테스트 모달"
+        content="이것은 테스트 모달입니다."
+        buttons={[
+          { label: '확인', onClick: () => {} },
+          { label: '취소', onClick: () => {} },
+        ]}
+      />
       <Footer />
     </>
   )
