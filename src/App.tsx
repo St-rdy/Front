@@ -1,7 +1,14 @@
 import { useState } from 'react'
-import Footer from './layouts/Footer/Footer'
 import { Input } from './components/Input'
 import { Modal } from './components/Modal'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Footer from './layouts/Footer/Footer'
+import Header from './layouts/header/Header'
+import Community from './pages/Community'
+import Home from './pages/Home'
+import StudyGroup from './pages/StudyGroup'
+import Chat from './pages/Chat'
+import User from './pages/User'
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -9,7 +16,8 @@ function App() {
   const [isModalOpen3, setIsModalOpen3] = useState(false)
 
   return (
-    <>
+    <Router>
+      <Header />
       <button onClick={() => setIsModalOpen(true)}>모달 열기</button>
       <button onClick={() => setIsModalOpen2(true)}>단일 버튼 모달 열기</button>
       <button onClick={() => setIsModalOpen3(true)}>하단 모달 열기</button>
@@ -91,8 +99,17 @@ function App() {
           },
         ]}
       ></Modal>
+      <main>
+        <Routes>
+          <Route path="/community" element={<Community />} />
+          <Route path="/studygroup" element={<StudyGroup />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/user" element={<User />} />
+        </Routes>
+      </main>
       <Footer />
-    </>
+    </Router>
   )
 }
 
