@@ -10,6 +10,7 @@ export const Modal: React.FC<ModalProps> = ({
   image, // 모달 이미지
   buttons, // 모달 버튼
   className = '', // 추가적인 클래스 이름
+  variant = 'center', // 모달 스타일 변형
 }) => {
   if (!isOpen) return null
 
@@ -22,7 +23,7 @@ export const Modal: React.FC<ModalProps> = ({
       <div className="modal-overlay" onClick={onClose}>
         {/* 모달 컨텐츠 */}
         <div
-          className={`modal-content ${className}`}
+          className={`modal-content ${className} modal-${variant}`}
           onClick={e => e.stopPropagation()}
         >
           {/* 이미지 */}

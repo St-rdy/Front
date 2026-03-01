@@ -12,6 +12,11 @@
   background-color: rgba(var(--color-gray-main-rgb), 0.5);
 }
 
+.modal-overlay:has(.modal-bottom) {
+  display: flex;
+  align-items: flex-end;
+}
+
 /* 모달 컨텐츠 */
 .modal-content {
   background: white;
@@ -27,6 +32,24 @@
   text-align: center;
   position: relative;
   z-index: 1001;
+}
+/* 하단 컨텐츠 일때 */
+.modal-bottom {
+  border-radius: 24px 24px 0 0; /* 상단 radius */
+  width: 100%; /* 최대 크기 */
+  max-width: 24.375rem; /* 최대 크기 */
+  margin: 0 auto; /* 중앙 정렬 */
+  padding: 1.25rem;
+  animation: bottomSheetSlideUp 0.1s ease-out;
+}
+
+@keyframes bottomSheetSlideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 /* 모달 이미지 */

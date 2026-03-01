@@ -6,11 +6,13 @@ import { Modal } from './components/Modal'
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isModalOpen2, setIsModalOpen2] = useState(false)
+  const [isModalOpen3, setIsModalOpen3] = useState(false)
 
   return (
     <>
       <button onClick={() => setIsModalOpen(true)}>모달 열기</button>
       <button onClick={() => setIsModalOpen2(true)}>단일 버튼 모달 열기</button>
+      <button onClick={() => setIsModalOpen3(true)}>하단 모달 열기</button>
       <Input
         label="아이디"
         placeholder="아이디를 입력해주세요"
@@ -72,6 +74,20 @@ function App() {
             label: '확인',
             variant: 'primary',
             onClick: () => setIsModalOpen2(false),
+          },
+        ]}
+      ></Modal>
+      <Modal
+        isOpen={isModalOpen3}
+        onClose={() => setIsModalOpen3(false)}
+        variant="bottom"
+        title="하단 모달"
+        content="하단에 위치하는 모달입니다."
+        buttons={[
+          {
+            label: '확인',
+            variant: 'primary',
+            onClick: () => setIsModalOpen3(false),
           },
         ]}
       ></Modal>

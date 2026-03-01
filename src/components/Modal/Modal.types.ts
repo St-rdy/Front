@@ -13,4 +13,5 @@ export interface ModalProps {
   image?: string // 이미지는 URL
   buttons: [ModalButton] | [ModalButton, ModalButton]
   className?: string
+  variant?: 'center' | 'bottom'
 }
