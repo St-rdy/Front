@@ -3,13 +3,13 @@ import type { ModalProps } from './Modal.types'
 import './Modal.css'
 
 export const Modal: React.FC<ModalProps> = ({
-  isOpen,
-  onClose,
-  title,
-  content,
-  image,
-  buttons,
-  className = '',
+  isOpen, // 모달이 열려 있는가
+  onClose, // 모달을 닫는 함수
+  title, // 모달 제목
+  content, // 모달 내용
+  image, // 모달 이미지
+  buttons, // 모달 버튼
+  className = '', // 추가적인 클래스 이름
 }) => {
   if (!isOpen) return null
 
@@ -25,7 +25,7 @@ export const Modal: React.FC<ModalProps> = ({
           className={`modal-content ${className}`}
           onClick={e => e.stopPropagation()}
         >
-          {/* 이미지 (선택적) */}
+          {/* 이미지 */}
           {image && (
             <div className="modal-image">
               <img src={image} alt={title} />

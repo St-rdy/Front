@@ -1,10 +1,16 @@
+import { useState } from 'react'
 import Footer from './layouts/Footer/Footer'
 import { Input } from './components/Input'
 import { Modal } from './components/Modal'
 
 function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen2, setIsModalOpen2] = useState(false)
+
   return (
     <>
+      <button onClick={() => setIsModalOpen(true)}>모달 열기</button>
+      <button onClick={() => setIsModalOpen2(true)}>단일 버튼 모달 열기</button>
       <Input
         label="아이디"
         placeholder="아이디를 입력해주세요"
@@ -38,15 +44,37 @@ function App() {
       />
       <Input error="에러 메시지" multiline={false} />
       <Modal
-        isOpen={true}
-        onClose={() => {}}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        image="/Modal/book.svg"
         title="테스트 모달"
         content="이것은 테스트 모달입니다."
         buttons={[
-          { label: '확인', onClick: () => {} },
-          { label: '취소', onClick: () => {} },
+          {
+            label: '취소',
+            variant: 'secondary',
+            onClick: () => setIsModalOpen(false),
+          },
+          {
+            label: '확인',
+            variant: 'primary',
+            onClick: () => setIsModalOpen(false),
+          },
         ]}
       />
+      <Modal
+        isOpen={isModalOpen2}
+        onClose={() => setIsModalOpen2(false)}
+        title="단일 버튼 테스트 모달"
+        content="단일 테스트 모달입니다."
+        buttons={[
+          {
+            label: '확인',
+            variant: 'primary',
+            onClick: () => setIsModalOpen2(false),
+          },
+        ]}
+      ></Modal>
       <Footer />
     </>
   )

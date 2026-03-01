@@ -1,0 +1,99 @@
+/* 배경 오버레이 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  background-color: rgba(var(--color-gray-main-rgb), 0.5);
+}
+
+/* 모달 컨텐츠 */
+.modal-content {
+  background: white;
+  border-radius: 24px;
+  padding: 1.25rem;
+  max-width: calc(24.375rem - 64px);
+  width: 90%;
+  box-shadow: 0 10px 40px rgba(var(--color-gray-main), 0.15);
+  display: flex;
+  gap: 1.25rem;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 1001;
+}
+
+/* 모달 이미지 */
+.modal-image img {
+  width: 180px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* 제목 */
+.modal-title {
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+/* 내용 */
+.modal-content-text {
+  font-size: var(--font-size-main);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-secondary);
+}
+
+/* 버튼 영역 */
+.modal-buttons {
+  display: flex;
+  gap: 0.94rem;
+  width: 100%;
+}
+
+.modal-buttons.single {
+  flex-direction: column;
+}
+
+.modal-buttons.double {
+  flex-direction: row;
+}
+
+/* 버튼 공통 스타일 */
+.modal-button {
+  flex: 1;
+  padding: var(--spacing-12) var(--spacing-20);
+  border-radius: 12px;
+  font-size: var(--font-size-main);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  outline: none;
+}
+
+/* Secondary 버튼 (회색) */
+.modal-button-secondary {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
+}
+
+.modal-button-secondary:hover {
+  background-color: var(--color-gray-100);
+}
+
+/* Primary 버튼 (초록색) */
+.modal-button-primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+.modal-button-primary:hover {
+  background-color: var(--color-primary-dark);
+}
