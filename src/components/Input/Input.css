@@ -6,7 +6,8 @@
   gap: var(--spacing-8);
   border: 1px solid var(--color-gray-500);
   border-radius: var(--spacing-12);
-  padding: var(--spacing-main-padding);
+  padding: var(--spacing-12) var(--spacing-main-padding)
+    var(--spacing-main-padding) var(--spacing-main-padding);
   margin: var(--spacing-main-padding);
 }
 
@@ -22,6 +23,7 @@
 
 .input-wrapper {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: var(--spacing-8);
 }
@@ -45,6 +47,7 @@
 
 .input::placeholder {
   color: var(--color-gray-500);
+  font-weight: var(--font-weight-bold);
 }
 
 .input-action-button {
@@ -65,4 +68,12 @@
   font-size: 0.875rem;
   justify-content: center;
   align-items: center;
+}
+
+textarea.input {
+  resize: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  min-height: 100px;
 }
