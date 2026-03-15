@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Footer from './layouts/footer/Footer'
+import Footer from './layouts/Footer/Footer'
 import Header from './layouts/header/Header'
 import Community from './pages/Community'
 import Home from './pages/Home'
-import StudyGroup from './pages/Studygroup'
+import StudyGroup from './pages/StudyGroup'
 import Chat from './pages/Chat'
 import User from './pages/User'
 
