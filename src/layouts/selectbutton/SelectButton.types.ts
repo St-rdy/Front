@@ -8,7 +8,7 @@ export type SelectButtonState = 'active' | 'inactive'
 export interface SelectButtonProps extends React.InputHTMLAttributes<HTMLInputElement> {
   variant?: SelectButtonVariant
   color?: SelectButtonColor
-  size?: SelectButtonSize
+  btnsize?: SelectButtonSize
   state?: SelectButtonState
   type?: 'checkbox' | 'radio'
 }

@@ -5,7 +5,7 @@ import styles from './SelectButton.module.css'
 const SelectButton: React.FC<SelectButtonProps> = ({
   variant = 'solid',
   color = 'primary',
-  size = 'medium',
+  btnsize = 'medium',
   state = 'active',
   type = 'checkbox',
   children,
@@ -32,7 +32,7 @@ const SelectButton: React.FC<SelectButtonProps> = ({
           ${styles.selectBtn} 
           ${styles[variant]} 
           ${styles[color]} 
-          ${styles[size]} 
+          ${styles[btnsize]} 
           ${className || ''}
         `}
       >
