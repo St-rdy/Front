@@ -1,5 +1,4 @@
-/* ─── 컨테이너 ──────────────────────────────────────────────── */
-
+/* 컨테이너 */
 .list {
   list-style: none;
   margin: 0;
@@ -14,7 +13,7 @@
   padding: var(--spacing-32) var(--spacing-16);
 }
 
-/* ─── 공통 아이템 ────────────────────────────────────────────── */
+/* 공통 */
 
 .list-item {
   display: flex;
@@ -36,7 +35,7 @@
   border-bottom: none;
 }
 
-/* ─── 아바타 (Chat용 큰 아바타) ──────────────────────────────── */
+/* 아바타 */
 
 .list-item__avatar {
   width: 48px;
@@ -59,7 +58,7 @@
   background-color: var(--color-gray-200);
 }
 
-/* ─── Chat 아이템 ─────────────────────────────────────────────── */
+/* 채팅 */
 
 .list-item--chat {
   align-items: center;
@@ -120,7 +119,7 @@
   justify-content: center;
 }
 
-/* ─── Post 아이템 ─────────────────────────────────────────────── */
+/* post */
 
 .list-item--post {
   flex-direction: column;
@@ -236,6 +235,14 @@
 
 .list-item__likes,
 .list-item__comments {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
   font-size: var(--font-size-main);
   color: var(--color-text-tertiary);
+}
+
+.list-item__stat-icon {
+  width: 14px;
+  height: 14px;
 }
