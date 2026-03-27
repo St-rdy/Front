@@ -1,0 +1,36 @@
+@import '/src/styles/index.css';
+
+.sign-up-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100dvh;
+}
+
+.sign-up-title-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-gap-large);
+  margin-top: var(--spacing-64);
+  margin-bottom: var(--spacing-24);
+}
+
+.sign-up-title {
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-extra-bold);
+}
+
+.sign-up-sub-title {
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-regular);
+}
+
+.sign-up-bottom-sheet {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.sign-up-bottom-sheet-hidden {
+  margin-top: var(--spacing-24);
+}

@@ -7,7 +7,7 @@ import Home from './pages/Home'
 import StudyGroup from './pages/StudyGroup'
 import Chat from './pages/Chat'
 import User from './pages/User'
-import SignUpPage from './pages/auth/SignUpPage'
+import SignUpPage from './pages/auth/SignUpPage/SignUpPage'
 import SignUpCompletePage from './pages/auth/SignUpCompletePage'
 
 // 회원가입, 로그인을 제외한 나머지 모든 페이지에선 헤더와 푸터가 보이게 MainLayout 컴포넌트를 만들어 라우팅을 지정
