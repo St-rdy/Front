@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import StudyGroup from './pages/StudyGroup'
 import Chat from './pages/Chat'
 import User from './pages/User'
+import LoginPage from './pages/auth/LoginPage/LoginPage'
 import SignUpPage from './pages/auth/SignUpPage/SignUpPage'
 import SignUpCompletePage from './pages/auth/SignUpCompletePage'
 
@@ -37,6 +38,7 @@ function App() {
           <Route path="/user" element={<User />} />
         </Route>
 
+        <Route path="/auth/login" element={<LoginPage />} />
         <Route path="/auth/signup" element={<SignUpPage />} />
         <Route path="/auth/signup-complete" element={<SignUpCompletePage />} />
       </Routes>

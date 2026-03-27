@@ -1,0 +1,41 @@
+.social-login-button {
+  display: grid;
+  grid-template-columns: 24px 1fr 24px; /* 아이콘 | 텍스트 | 여백(균형용) */
+  align-items: center;
+  width: 100%;
+  height: var(--spacing-48);
+  padding: 0 var(--spacing-button-padding-x);
+  border: none;
+  border-radius: 6px;
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+}
+
+.social-login-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.social-login-button span {
+  text-align: center;
+}
+
+/* 카카오 */
+.social-btn-kakao {
+  background-color: #fee500;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+/* 네이버 */
+.social-btn-naver {
+  background-color: #03c75a;
+  color: #ffffff;
+}
+
+/* 구글 */
+.social-btn-google {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #6d6d6d;
+}
