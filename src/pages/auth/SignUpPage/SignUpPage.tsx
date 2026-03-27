@@ -7,39 +7,39 @@ export default function SignUpPage() {
   const [userName, setUserName] = useState('') // 이름 상태
   const [userNickName, setUserNickName] = useState('') // 닉네임 상태
   const [isNickNameChecked, setIsNickNameChecked] = useState(false) // 닉네임 유효성 검사 상태
+  const [nickNameError, setNickNameError] = useState('') // 닉네임 오류 상태
 
   const navigate = useNavigate()
-  // 제출 버튼을 눌렀을 때 동작될 함수
-  const handleSubmit = () => {
-    if (userName.trim() === '') {
-      alert('이름을 입력해주세요.')
-      return
-    }
-    handleNickNameChecked()
-    navigate('/auth/signup-complete')
-  }
 
   // 닉네임 유효성 검사
   const handleNickNameChecked = () => {
     if (userNickName.trim() === '') {
-      alert('닉네임을 입력해주세요.')
+      setNickNameError('닉네임을 입력해주세요.')
       return
     }
     if (userNickName.length < 3) {
-      alert('닉네임은 3자 이상이어야 합니다.')
+      setNickNameError('닉네임은 3자 이상이어야 합니다.')
       return
     }
     if (userNickName.length > 20) {
-      alert('닉네임은 20자 미만이어야 합니다.')
+      setNickNameError('닉네임은 20자 미만이어야 합니다.')
       return
     }
     setIsNickNameChecked(true)
+    setNickNameError('') // 오류 메세지 초기화
   }
 
   // 제출 버튼 활성화 여부
   // 공백을 제거한 후 이름과 닉네임이 모두 입력되어야 제출 버튼이 활성화가 됩니다.
   const isSubmitDisabled =
     userName.trim() === '' || userNickName.trim() === '' || !isNickNameChecked
+
+  const handleSubmit = () => {
+    if (!isNickNameChecked) {
+      return
+    }
+    navigate('/auth/signup-complete')
+  }
 
   return (
     <div className="sign-up-container">
@@ -65,6 +65,7 @@ export default function SignUpPage() {
           multiline={false}
           value={userNickName}
           onChange={e => setUserNickName(e.target.value)}
+          error={nickNameError}
           rightAction={{
             label: '중복확인',
             onClick: () => {
