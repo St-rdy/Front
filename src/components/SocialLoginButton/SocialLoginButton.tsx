@@ -2,6 +2,7 @@ import React from 'react'
 import type { SocialLoginButtonProps } from './SocialLoginButton.types'
 import './SocialLoginButton.css'
 
+// 버튼별 객체 분리
 const variantConfig = {
   kakao: {
     className: 'social-btn-kakao',
