@@ -1,0 +1,54 @@
+/* 
+    Colors
+    프로젝트의 색상 시스템을 정의합니다.
+*/
+
+:root {
+  /* Primary Colors */
+  --color-primary: #0cc76d;
+  --color-primary-light: #3dd587;
+  --color-primary-dark: #0aaf5f;
+  --color-primary-rgb: 12, 199, 109;
+
+  /* Secondary Colors */
+  --color-secondary: #5b74a8;
+  --color-secondary-light: #7a91c2;
+  --color-secondary-dark: #4a5f8e;
+  --color-secondary-rgb: 91, 116, 168;
+
+  /* Gray Scale */
+  --color-gray-main: #7a8085;
+  --color-gray-main-rgb: 122, 128, 133;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #7a8085;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+
+  /* Semantic Colors */
+  --color-success: #0cc76d;
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
+  --color-info: #3b82f6;
+
+  /* Background Colors */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f9fafb;
+  --color-bg-tertiary: #f3f4f6;
+
+  /* Text Colors */
+  --color-text-primary: #111827;
+  --color-text-secondary: #7a8085;
+  --color-text-tertiary: #9ca3af;
+  --color-text-inverse: #ffffff;
+
+  /* Border Colors */
+  --color-border-light: #e5e7eb;
+  --color-border-medium: #d1d5db;
+  --color-border-dark: #9ca3af;
+}

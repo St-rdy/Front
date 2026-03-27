@@ -1,0 +1,31 @@
+/* 기본 브라우저 초기화 */
+@import './reset.css';
+/* 색상 시스템 */
+@import './colors.css';
+/* 타이포그래피 시스템 */
+@import './typography.css';
+/* 여백 시스템 */
+@import './spacing.css';
+
+#root {
+  max-width: 24.375rem; /* 390px */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 0 auto;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background-color: var(--color-bg-primary);
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    max-width: 100%;
+    left: 0;
+  }
+}

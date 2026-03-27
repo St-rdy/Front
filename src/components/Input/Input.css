@@ -1,0 +1,79 @@
+@import '/src/styles/index.css';
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  border: 1px solid var(--color-gray-500);
+  border-radius: var(--spacing-12);
+  padding: var(--spacing-12) var(--spacing-main-padding)
+    var(--spacing-main-padding) var(--spacing-main-padding);
+  margin: var(--spacing-main-padding) 0;
+}
+
+.input-container:focus-within {
+  border-color: var(--color-primary);
+}
+
+.input-container label {
+  font-size: var(--font-size-label);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-regular);
+}
+
+.input-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+.input {
+  width: 100%;
+  font-size: var(--font-size-button);
+  color: var(--color-gray-500);
+  background-color: var(--color-bg-primary);
+}
+
+.input-lg {
+  height: 9rem;
+  display: flex;
+  flex-direction: column;
+  vertical-align: top;
+}
+.input-lg::placeholder {
+  vertical-align: top;
+}
+
+.input::placeholder {
+  color: var(--color-gray-500);
+  font-weight: var(--font-weight-bold);
+}
+
+.input-action-button {
+  font-size: 0.6rem;
+  width: 4rem;
+  color: var(--color-gray-500);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  padding: var(--spacing-4);
+  border: 0.5px solid var(--color-gray-500);
+  border-radius: var(--spacing-8);
+}
+
+.input-error {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-error);
+  font-size: 0.875rem;
+  justify-content: center;
+  align-items: center;
+}
+
+textarea.input {
+  resize: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  min-height: 100px;
+}

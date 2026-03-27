@@ -1,0 +1,98 @@
+@import '/src/styles/index.css';
+
+/* 기본 공통 스타일 */
+.btn {
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+/* Size */
+.small {
+  padding: 8px 25px;
+  font-size: var(--font-size-main);
+}
+.medium {
+  padding: 12px 50px;
+  font-size: var(--font-size-main);
+}
+.large {
+  padding: 16px 60px;
+  font-size: var(--font-size-title);
+}
+
+/* State: Pressed (클릭했을 때) */
+.btn:active,
+.pressed {
+  filter: brightness(0.7);
+}
+
+/* State: Inactive */
+.solid.inactive {
+  background-color: var(--color-gray-400) !important;
+  color: var(--color-bg-primary) !important;
+  cursor: not-allowed;
+}
+.outline.inactive {
+  background-color: var(--color-bg-primary) !important;
+  color: var(--color-gray-400) !important;
+  border: 1px solid var(--color-gray-400) !important;
+  cursor: not-allowed;
+}
+
+/* 색상 조합 */
+/* solid + primary */
+.solid.primary {
+  background: var(--color-primary);
+  color: var(--color-bg-primary);
+}
+
+/* solid + secondary */
+.solid.secondary {
+  background: var(--color-secondary);
+  color: var(--color-bg-primary);
+}
+
+/* outline + primary */
+.outline.primary {
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-bg-primary);
+}
+
+/* outline + secondary */
+.outline.secondary {
+  border: 1px solid var(--color-secondary);
+  color: var(--color-secondary);
+  background: var(--color-bg-primary);
+}
+
+.spinner {
+  /* 버튼 크기에 맞춰 적절한 높이 설정 (글자 높이와 맞춤) */
+  height: 1.2em;
+  width: auto;
+  display: block;
+  margin: 0 auto;
+
+  /* 무한 회전 애니메이션 */
+  animation: spin 5s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 사이즈별로 이미지 크기를 미세하게 조정하고 싶을 때 */
+.small .spinner {
+  height: 14px;
+}
+.medium .spinner {
+  height: 18px;
+}
+.large .spinner {
+  height: 22px;
+}
