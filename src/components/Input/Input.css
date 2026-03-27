@@ -8,7 +8,7 @@
   border-radius: var(--spacing-12);
   padding: var(--spacing-12) var(--spacing-main-padding)
     var(--spacing-main-padding) var(--spacing-main-padding);
-  margin: var(--spacing-main-padding);
+  margin: var(--spacing-main-padding) 0;
 }
 
 .input-container:focus-within {
