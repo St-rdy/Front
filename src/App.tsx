@@ -9,7 +9,7 @@ import Chat from './pages/Chat'
 import User from './pages/User'
 import LoginPage from './pages/auth/LoginPage/LoginPage'
 import SignUpPage from './pages/auth/SignUpPage/SignUpPage'
-import SignUpCompletePage from './pages/auth/SignUpCompletePage'
+import SignUpCompletePage from './pages/auth/SignUpComplete/SignUpCompletePage'
 
 // 회원가입, 로그인을 제외한 나머지 모든 페이지에선 헤더와 푸터가 보이게 MainLayout 컴포넌트를 만들어 라우팅을 지정
 // Outlet이란 Outlet 자리에 자식의 컴포넌트가 랜더링 되는 것을 의미한다.
