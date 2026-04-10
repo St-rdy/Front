@@ -63,8 +63,41 @@ export default function OnBoardingPage() {
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          <button onClick={() => navigate('/')}>{currentIndex}</button>
-          OnBoardingPage
+          {/* 슬라이드 영역 */}
+          <div
+            className="onboarding-slide-track"
+            style={{
+              transform: `translateX(-${(currentIndex * 100) / SLIDES.length}%)`,
+            }}
+          >
+            {SLIDES.map((slide, index) => (
+              <div className="onboarding-slide" key={index}>
+                <img src={slide.image} alt={slide.title} />
+                <h2>{slide.title}</h2>
+                <p>{slide.describe}</p>
+              </div>
+            ))}
+          </div>
+          {/* 하단 고정 영역 */}
+          <div className="onboarding-bottom">
+            <div className="onboarding-indicators">
+              {SLIDES.map((_, index) => (
+                <div
+                  className={`onboarding-dot ${index === currentIndex ? 'onboarding-dot-active' : ''}`}
+                  key={index}
+                  onClick={() => setCurrentIndex(index)}
+                />
+              ))}
+            </div>
+            <div className="onboarding-button">
+              <button
+                className="onboarding-button onboarding-button-primary"
+                onClick={() => navigate('/auth/login')}
+              >
+                시작하기
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </>

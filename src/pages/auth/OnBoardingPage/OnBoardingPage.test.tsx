@@ -9,7 +9,7 @@ vi.mock('react-router-dom', () => ({
 describe('온보딩 테스트', () => {
   it('온보딩 페이지가 렌더링 되어야 한다.', () => {
     render(<OnBoardingPage />)
-    const onBoardingPageElement = screen.getByText('OnBoardingPage')
+    const onBoardingPageElement = screen.getByText('시작하기')
     expect(onBoardingPageElement).toBeInTheDocument()
   })
 })
