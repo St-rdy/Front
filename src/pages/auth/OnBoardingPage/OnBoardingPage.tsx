@@ -6,22 +6,29 @@ import './OnBoardingPage.css'
 const SLIDES = [
   {
     image: '/Auth/OnBoarding/on_boarding_01.svg',
-    title: '공부를 시작하는 순간부터 기록이 쌓여요',
+    title: [
+      { text: '공부를 시작하는 순간', highlight: true },
+      { text: '부터 기록이 쌓여요', highlight: false },
+    ],
     describe: '당신의 하루 학습을 기록해보세요',
   },
   {
     image: '/Auth/OnBoarding/on_boarding_02.svg',
-    title: '공부할수록 레벨이 올라가요',
-    describe: '공부하면서 경험치를 채우며 당신의 노력을 남겨보세요',
+    title: [
+      { text: '공부할수록 ', highlight: false },
+      { text: '레벨', highlight: true },
+      { text: '이 올라가요', highlight: false },
+    ],
+    describe: '공부하면서 경험치를 채우며\n당신의 노력을 남겨보세요',
   },
   {
     image: '/Auth/OnBoarding/on_boarding_03.svg',
-    title: '혼자여도, 함께여도 계속할 수 있어요',
-    describe: '스터디 그룹을 만들거나 커뮤니티에서 학습을 응원하고 공유해봐요',
+    title: [{ text: '혼자여도, 함께여도 계속할 수 있어요', highlight: false }],
+    describe: '스터디 그룹을 만들거나 커뮤니티에서\n학습을 응원하고 공유해봐요',
   },
 ]
 
-const AUTO_SLIDE_INTERVAL = 3000
+const AUTO_SLIDE_INTERVAL = 5000
 
 export default function OnBoardingPage() {
   // 현재 슬라이드의 인덱스 state
@@ -71,33 +78,51 @@ export default function OnBoardingPage() {
             }}
           >
             {SLIDES.map((slide, index) => (
-              <div className="onboarding-slide" key={index}>
-                <img src={slide.image} alt={slide.title} />
-                <h2>{slide.title}</h2>
-                <p>{slide.describe}</p>
+              <div
+                className="onboarding-slide"
+                key={index}
+                style={{ width: `${100 / SLIDES.length}%` }}
+              >
+                <img
+                  src={slide.image}
+                  alt={slide.title.map(p => p.text).join('')}
+                  className="onboarding-image"
+                />
+                <h2 className="onboarding-title">
+                  {slide.title.map((part, i) =>
+                    part.highlight ? (
+                      <span key={i} className="onboarding-title-highlight">
+                        {part.text}
+                      </span>
+                    ) : (
+                      <span key={i}>{part.text}</span>
+                    )
+                  )}
+                </h2>
+                <p className="onboarding-describe">{slide.describe}</p>
               </div>
             ))}
           </div>
-          {/* 하단 고정 영역 */}
-          <div className="onboarding-bottom">
-            <div className="onboarding-indicators">
-              {SLIDES.map((_, index) => (
-                <div
-                  className={`onboarding-dot ${index === currentIndex ? 'onboarding-dot-active' : ''}`}
-                  key={index}
-                  onClick={() => setCurrentIndex(index)}
-                />
-              ))}
-            </div>
-            <div className="onboarding-button">
-              <button
-                className="onboarding-button onboarding-button-primary"
-                onClick={() => navigate('/auth/login')}
-              >
-                시작하기
-              </button>
-            </div>
+        </div>
+        {/* 하단 고정 영역 */}
+        <div className="onboarding-bottom">
+          <div className="onboarding-indicators">
+            {SLIDES.map((_, index) => (
+              <div
+                className={`onboarding-dot ${index === currentIndex ? 'onboarding-dot--active' : ''}`}
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+              />
+            ))}
           </div>
+        </div>
+        <div className="onboarding-button">
+          <button
+            className="onboarding-button onboarding-button--primary"
+            onClick={() => navigate('/auth/login')}
+          >
+            시작하기
+          </button>
         </div>
       </div>
     </>
