@@ -4,6 +4,7 @@ import './Card.css'
 
 export const Card: React.FC<CardProps> = props => {
   const {
+    // 조건 추가
     title,
     date,
     imageUrl,
@@ -26,7 +27,7 @@ export const Card: React.FC<CardProps> = props => {
       <div className="card-info">
         <div className="card-header">
           <h3 className="card-title">{title}</h3>
-          {/* 오른쪽 아이콘 */}
+          {/* 오른쪽 아이콘 */}ㅣ
           <div className="card-icon-group">
             {isBookmark ? (
               /* 북마크 페이지일 때: 하트 노출 */
