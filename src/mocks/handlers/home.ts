@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw'
 import type { HomeSummaryResponse } from '../../types/home'
 
+// 임시 mock 데이터 (메인 페이지)
 const mockHomeSummary: HomeSummaryResponse = {
   user: {
     name: '엄박봉',
@@ -34,6 +35,7 @@ const mockHomeSummary: HomeSummaryResponse = {
   ],
 }
 
+// 메인 페이지 API 라우터
 export const homeHandlers = [
   http.get('/api/home/summary', () => {
     return HttpResponse.json(mockHomeSummary)
