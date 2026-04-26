@@ -1,0 +1,42 @@
+@import '/src/styles/index.css';
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100dvh;
+}
+
+.login-title-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-gap-large);
+  margin-top: var(--spacing-64);
+  margin-bottom: var(--spacing-24);
+}
+
+.login-title {
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-extra-bold);
+}
+
+.login-title-highlight {
+  color: #03c75a;
+}
+
+.login-sub-title {
+  font-size: var(--font-size-main);
+  font-weight: var(--font-weight-regular);
+  color: #888;
+}
+
+.login-image {
+  width: 100%;
+}
+
+.login-button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: var(--spacing-24);
+}
