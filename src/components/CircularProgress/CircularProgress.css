@@ -1,0 +1,23 @@
+.circular-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.circular-progress__percent {
+  font-size: 14px;
+  font-weight: 700;
+  fill: var(--color-text-primary);
+}
+
+.circular-progress__label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.circular-progress__detail {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
