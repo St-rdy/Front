@@ -1,6 +1,4 @@
-import React from 'react'
-
-const Community: React.FC = () => {
+export default function Community() {
   return (
     <div className="community-container">
       <section className="section">
@@ -9,5 +7,3 @@ const Community: React.FC = () => {
     </div>
   )
 }
-
-export default Community
