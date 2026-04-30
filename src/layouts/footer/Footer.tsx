@@ -12,7 +12,10 @@ export default function Footer() {
         <nav className="footer-nav">
           <button
             className="footer-item"
-            onClick={() => navigate('/community')}
+            onClick={() => {
+              navigate('/community')
+              setActive('community')
+            }}
           >
             {active === 'community' ? (
               <img src="/Footer/community_fill.svg" alt="커뮤니티" />
@@ -32,7 +35,13 @@ export default function Footer() {
             )}
             스터디그룹
           </button>
-          <button className="footer-item" onClick={() => setActive('home')}>
+          <button
+            className="footer-item"
+            onClick={() => {
+              navigate('/')
+              setActive('home')
+            }}
+          >
             {active === 'home' ? (
               <img src="/Footer/home_fill.svg" alt="홈" />
             ) : (
