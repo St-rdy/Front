@@ -1,9 +1,10 @@
-import React from 'react'
 import { useState } from 'react'
 import './Footer.css'
+import { useNavigate } from 'react-router-dom'
 
 export default function Footer() {
   const [active, setActive] = useState('home')
+  const navigate = useNavigate()
 
   return (
     <>
@@ -11,7 +12,7 @@ export default function Footer() {
         <nav className="footer-nav">
           <button
             className="footer-item"
-            onClick={() => setActive('community')}
+            onClick={() => navigate('/community')}
           >
             {active === 'community' ? (
               <img src="/Footer/community_fill.svg" alt="커뮤니티" />
