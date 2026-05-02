@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import FilterBar from '../../components/FilterBar/FilterBar'
 import { useCommunityPosts } from '../../hooks/useCommunity'
 import type { CommunityPost } from './community.types'
@@ -62,7 +62,9 @@ export default function Community() {
           {data.posts.length === 0 ? (
             <p className="community-state">게시글이 없습니다.</p>
           ) : (
-            data.posts.map(post => <PostCard key={post.id} post={post} />)
+            data.posts.map((post: CommunityPost) => (
+              <PostCard key={post.id} post={post} />
+            ))
           )}
         </div>
       )}

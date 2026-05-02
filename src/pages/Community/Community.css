@@ -1,135 +1,134 @@
- @import '/src/styles/index.css';
+@import '/src/styles/index.css';
 
-  .community-page {
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;                                                           
-    background-color: var(--color-bg-secondary);
-    padding-bottom: calc(4.8125rem + var(--spacing-16));                        
-  }                                                                             
-  
-  .community-state {                                                            
-    text-align: center;
-    padding: var(--spacing-32) var(--spacing-main-padding);
-    color: var(--color-text-tertiary);
-    font-size: var(--font-size-main);                                           
-  }
-                                                                                
-  /* 카드 목록 */ 
-  .community-list {
-    display: flex;                                                              
-    flex-direction: column;
-    gap: var(--spacing-8);                                                      
-    padding: var(--spacing-8) var(--spacing-main-padding);
-  }
+.community-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background-color: var(--color-bg-secondary);
+  padding-bottom: calc(4.8125rem + var(--spacing-16));
+}
 
-  /* 게시글 카드 */                                                             
-  .community-card {
-    background-color: var(--color-bg-primary);                                  
-    border-radius: 12px;
-    padding: var(--spacing-16);
-    display: flex;                                                              
-    flex-direction: column;
-    gap: var(--spacing-8);                                                      
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-    cursor: pointer;                                                            
-  }
-                                                                                
-  .community-card__title {
-    font-size: var(--font-size-sub);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-text-primary);                                           
-    line-height: var(--line-height-normal);
-  }                                                                             
-                  
-  .community-card__content {
-    font-size: var(--font-size-main);
-    color: var(--color-text-secondary);                                         
-    line-height: var(--line-height-normal);
-    display: -webkit-box;                                                       
-    -webkit-line-clamp: 3;                                                      
-    -webkit-box-orient: vertical;
-    overflow: hidden;                                                           
-  }               
+.community-state {
+  text-align: center;
+  padding: var(--spacing-32) var(--spacing-main-padding);
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-main);
+}
 
-  .community-card__date {
-    font-size: var(--font-size-label);
-    color: var(--color-text-tertiary);                                          
-  }
-                                                                                
-  /* 카드 하단: 작성자 + 통계 */                                                
-  .community-card__footer {
-    display: flex;                                                              
-    align-items: center;
-    justify-content: space-between;
-    padding-top: var(--spacing-4);
-  }                                                                             
-   
-  .community-card__author {                                                     
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-8);
-  }
+/* 카드 목록 */
+.community-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  padding: var(--spacing-8) var(--spacing-main-padding);
+}
 
-  .community-card__avatar {
-    width: 28px;
-    height: 28px;                                                               
-    border-radius: 50%;
-    object-fit: cover;                                                          
-  }               
+/* 게시글 카드 */
+.community-card {
+  background-color: var(--color-bg-primary);
+  border-radius: 12px;
+  padding: var(--spacing-16);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+}
 
-  .community-card__avatar-fallback {
-    width: 28px;
-    height: 28px;                                                               
-    border-radius: 50%;
-    background-color: var(--color-gray-200);                                    
-    flex-shrink: 0;
-  }                                                                             
-  
-  .community-card__author-name {                                                
-    font-size: var(--font-size-main);
-    color: var(--color-text-secondary);
-    font-weight: var(--font-weight-medium);
-  }                                                                             
-  
-  .community-card__stats {                                                      
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-12);
-  }
+.community-card__title {
+  font-size: var(--font-size-sub);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-normal);
+}
 
-  .community-card__stat {                                                       
-    display: flex;
-    align-items: center;                                                        
-    gap: var(--spacing-4);
-    font-size: var(--font-size-main);
-    color: var(--color-text-tertiary);
-  }                                                                             
-  
-  .community-card__stat img {                                                   
-    width: 14px;  
-    height: 14px;
-  }
+.community-card__content {
+  font-size: var(--font-size-main);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-normal);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
-  /* FAB 버튼 - footer(4.8125rem) 바로 위 */                                    
-  .community-fab {
-    position: fixed;                                                            
-    bottom: calc(4.8125rem + var(--spacing-16));
-    right: var(--spacing-main-padding);                                         
-    width: 52px;
-    height: 52px;                                                               
-    border-radius: 50%;
-    background-color: var(--color-primary);
-    border: none;                                                               
-    box-shadow: 0 4px 12px rgba(var(--color-primary-rgb), 0.4);
-    display: flex;                                                              
-    align-items: center;
-    justify-content: center;                                                    
-    cursor: pointer;
-  }                                                                             
-                  
-  .community-fab img {
-    width: 22px;
-    height: 22px;
-    filter: brightness(0) invert(1);
-  }
+.community-card__date {
+  font-size: var(--font-size-label);
+  color: var(--color-text-tertiary);
+}
+
+/* 카드 하단: 작성자 + 통계 */
+.community-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--spacing-4);
+}
+
+.community-card__author {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+.community-card__avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.community-card__avatar-fallback {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--color-gray-200);
+  flex-shrink: 0;
+}
+
+.community-card__author-name {
+  font-size: var(--font-size-main);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+.community-card__stats {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+}
+
+.community-card__stat {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  font-size: var(--font-size-main);
+  color: var(--color-text-tertiary);
+}
+
+.community-card__stat img {
+  width: 14px;
+  height: 14px;
+}
+
+.community-fab {
+  position: fixed;
+  bottom: calc(4.8125rem + var(--spacing-16));
+  right: calc(max(0px, (100vw - 24.375rem) / 2) + var(--spacing-main-padding));
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  border: none;
+  box-shadow: 0 4px 12px rgba(var(--color-primary-rgb), 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.community-fab img {
+  width: 22px;
+  height: 22px;
+  filter: brightness(0) invert(1);
+}
