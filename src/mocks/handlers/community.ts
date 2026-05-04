@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw'
 import type { CommunityPostsResponse } from '../../pages/Community/community.types'
 
-const mockPosts: CommunityPostsResponse = {
+export const mockPosts: CommunityPostsResponse = {
   posts: [
     {
       id: 1,
