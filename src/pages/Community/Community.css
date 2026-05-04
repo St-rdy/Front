@@ -1,10 +1,10 @@
 @import '/src/styles/index.css';
 
 .community-page {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 100%;
-  background-color: var(--color-bg-secondary);
+  background-color: var(--color-bg-quaternary);
   padding-bottom: calc(4.8125rem + var(--spacing-16));
 }
 
@@ -21,6 +21,7 @@
   flex-direction: column;
   gap: var(--spacing-8);
   padding: var(--spacing-8) var(--spacing-main-padding);
+  background-color: var(--color-bg-quaternary);
 }
 
 /* 게시글 카드 */
