@@ -34,7 +34,7 @@ const mockPostDetails: Record<number, CommunityPostDetailResponse> = {
 
 // mock 데이터 요청 보내는 handler
 export const communityDetailHandlers = [
-  http.get('api/v1/community/post/:id', ({ params }) => {
+  http.get('/api/community/post/:id', ({ params }) => {
     const id = Number(params.id)
     const detail = mockPostDetails[id]
     if (!detail) {
