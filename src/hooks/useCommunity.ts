@@ -9,7 +9,7 @@ import { fetchCommunityPostDetail } from '../api/communityDetail'
 export const COMMUNITY_QUERY_KEYS = {
   posts: (category?: string) =>
     ['community', 'posts', category ?? '전체'] as const,
-  postDetail: (id: number) => ['community', 'posts', id] as const,
+  postDetail: (id: number | undefined) => ['community', 'posts', id] as const,
 }
 
 export function useCommunityPosts(category?: string) {
@@ -19,9 +19,10 @@ export function useCommunityPosts(category?: string) {
   })
 }
 
-export function useCommunityPostDetail(id: number) {
+export function useCommunityPostDetail(id: number | undefined) {
   return useQuery({
     queryKey: COMMUNITY_QUERY_KEYS.postDetail(id),
-    queryFn: () => fetchCommunityPostDetail(id),
+    queryFn: () => fetchCommunityPostDetail(id!),
+    enabled: id !== undefined,
   })
 }

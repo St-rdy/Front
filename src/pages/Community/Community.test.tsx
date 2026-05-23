@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, it, expect } from 'vitest'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { MemoryRouter } from 'react-router-dom'
 import { http, HttpResponse } from 'msw'
 import { server } from '../../mocks/server'
 import Community from './Community'
@@ -15,7 +16,9 @@ function renderCommunity() {
   })
   return render(
     <QueryClientProvider client={queryClient}>
-      <Community />
+      <MemoryRouter>
+        <Community />
+      </MemoryRouter>
     </QueryClientProvider>
   )
 }

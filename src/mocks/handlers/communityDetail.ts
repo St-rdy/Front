@@ -2,7 +2,7 @@ import { http, HttpResponse } from 'msw'
 import type { CommunityPostDetailResponse } from '../../pages/Community/CommunityDetail/CommunityDetail.types'
 
 // mock 데이터
-const mockPostDetails: Record<number, CommunityPostDetailResponse> = {
+export const mockPostDetails: Record<number, CommunityPostDetailResponse> = {
   1: {
     post: {
       id: 1,

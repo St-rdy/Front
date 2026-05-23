@@ -2,13 +2,20 @@ import { useState } from 'react'
 import FilterBar from '../../components/FilterBar/FilterBar'
 import { useCommunityPosts } from '../../hooks/useCommunity'
 import type { CommunityPost } from './community.types'
+import { useNavigate } from 'react-router-dom'
 import './Community.css'
 
 const CATEGORIES = ['전체', '취업 준비', '공부 인증', '스터디 그룹']
 
 function PostCard({ post }: { post: CommunityPost }) {
+  const navigate = useNavigate()
+
+  // 게시글 클릭 시 상세 페이지로 이동
+  const handlePostClick = () => {
+    navigate(`/community/${post.id}`)
+  }
   return (
-    <div className="community-card">
+    <div className="community-card" onClick={handlePostClick}>
       <p className="community-card__title">{post.title}</p>
       <p className="community-card__content">{post.content}</p>
       <p className="community-card__date">{post.date}</p>
