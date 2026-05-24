@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { fetchCommunityPosts } from '../api/community'
+import { fetchCommunityPostDetail } from '../api/communityDetail'
 
 // 캐싱을 위해 키를 관리하는 객체
 // 'community', 'posts' '전체' ... 이렇게 계층적으로 키를 설정하는 이유는
@@ -8,11 +9,20 @@ import { fetchCommunityPosts } from '../api/community'
 export const COMMUNITY_QUERY_KEYS = {
   posts: (category?: string) =>
     ['community', 'posts', category ?? '전체'] as const,
+  postDetail: (id: number | undefined) => ['community', 'posts', id] as const,
 }
 
 export function useCommunityPosts(category?: string) {
   return useQuery({
     queryKey: COMMUNITY_QUERY_KEYS.posts(category),
     queryFn: () => fetchCommunityPosts(category),
+  })
+}
+
+export function useCommunityPostDetail(id: number | undefined) {
+  return useQuery({
+    queryKey: COMMUNITY_QUERY_KEYS.postDetail(id),
+    queryFn: () => fetchCommunityPostDetail(id!),
+    enabled: id !== undefined,
   })
 }

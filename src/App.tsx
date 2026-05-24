@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom' // 회원가입, 로그인 때 헤더�
 import Footer from './layouts/Footer/Footer'
 import Header from './layouts/header/Header'
 import Community from './pages/Community/Community'
+import CommunityDetail from './pages/Community/CommunityDetail/CommunityDetail'
 import Home from './pages/Home'
 import StudyGroup from './pages/StudyGroup'
 import Chat from './pages/Chat'
@@ -39,6 +40,7 @@ function App() {
           <Route path="/user" element={<User />} />
         </Route>
 
+        <Route path="/community/:id" element={<CommunityDetail />} />
         <Route path="/auth/onboarding" element={<OnBoardingPage />} />
         <Route path="/auth/login" element={<LoginPage />} />
         <Route path="/auth/signup" element={<SignUpPage />} />
