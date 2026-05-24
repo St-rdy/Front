@@ -81,49 +81,51 @@ export default function CommunityWrite() {
 
         <div className="write-divider" />
 
-        {/* 카테고리 선택 버튼 */}
-        <button
-          className="write-category"
-          onClick={() => setShowCategories(prev => !prev)}
-        >
-          <span
-            className={
-              form.category
-                ? 'write-category__selected'
-                : 'write-category__placeholder'
-            }
+        {/* 카테고리 선택 버튼 + 드롭다운을 wrapper로 묶어 position: relative 기준점 설정 */}
+        <div className="write-category-wrapper">
+          <button
+            className="write-category"
+            onClick={() => setShowCategories(prev => !prev)}
           >
-            {form.category || '카테고리 선택하기'}
-          </span>
-          <img
-            src="/Header/back_arrow.svg"
-            alt="선택"
-            className="write-category__arrow"
-          />
-        </button>
+            <span
+              className={
+                form.category
+                  ? 'write-category__selected'
+                  : 'write-category__placeholder'
+              }
+            >
+              {form.category || '카테고리 선택하기'}
+            </span>
+            <img
+              src="/Header/back_arrow.svg"
+              alt="선택"
+              className="write-category__arrow"
+            />
+          </button>
 
-        {/* showCategories가 true일 때만 목록 렌더링 */}
-        {showCategories && (
-          <ul className="write-category-list">
-            {CATEGORIES.map(cat => (
-              <li key={cat}>
-                <button
-                  className="write-category-list__item"
-                  onClick={() => {
-                    setForm(prev => ({
-                      // ...prev : 나머지 필드는 유지, category만 선택한 값으로 교체
-                      ...prev,
-                      category: cat,
-                    }))
-                    setShowCategories(false)
-                  }}
-                >
-                  {cat}
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
+          {/* showCategories가 true일 때만 목록 렌더링 (position: absolute로 아래 요소를 밀지 않음) */}
+          {showCategories && (
+            <ul className="write-category-list">
+              {CATEGORIES.map(cat => (
+                <li key={cat}>
+                  <button
+                    className="write-category-list__item"
+                    onClick={() => {
+                      setForm(prev => ({
+                        // ...prev : 나머지 필드는 유지, category만 선택한 값으로 교체
+                        ...prev,
+                        category: cat,
+                      }))
+                      setShowCategories(false)
+                    }}
+                  >
+                    {cat}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
         <div className="write-divider" />
 
