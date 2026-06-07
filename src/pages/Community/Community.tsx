@@ -14,6 +14,7 @@ function PostCard({ post }: { post: CommunityPost }) {
   const handlePostClick = () => {
     navigate(`/community/${post.id}`)
   }
+
   return (
     <div className="community-card" onClick={handlePostClick}>
       <p className="community-card__title">{post.title}</p>
@@ -51,6 +52,12 @@ export default function Community() {
   const [selectedCategory, setSelectedCategory] = useState('전체')
   const { data, isLoading, isError } = useCommunityPosts(selectedCategory)
 
+  const navigate = useNavigate()
+
+  const handleWriteClick = () => {
+    navigate('/community/write')
+  }
+
   return (
     <div className="community-page">
       <FilterBar
@@ -76,7 +83,7 @@ export default function Community() {
         </div>
       )}
 
-      <button className="community-fab">
+      <button className="community-fab" onClick={handleWriteClick}>
         <img src="/Community/edit.svg" alt="글쓰기" />
       </button>
     </div>
