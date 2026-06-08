@@ -26,7 +26,10 @@ export default function Footer() {
           </button>
           <button
             className="footer-item"
-            onClick={() => setActive('study_group')}
+            onClick={() => {
+              navigate('/studygroup')
+              setActive('study_group')
+            }}
           >
             {active === 'study_group' ? (
               <img src="/Footer/study_group_fill.svg" alt="스터디그룹" />

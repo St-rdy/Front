@@ -1,4 +1,3 @@
-import React from 'react'
 import './SignUpCompletePage.css'
 import Button from '../../../layouts/button'
 import { useNavigate } from 'react-router-dom'

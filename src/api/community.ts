@@ -1,4 +1,4 @@
-import type { CommunityPostsResponse } from '../pages/Community/community'
+import type { CommunityPostsResponse } from '../pages/Community/community.types'
 import apiClient from './client'
 
 export async function fetchCommunityPosts(
