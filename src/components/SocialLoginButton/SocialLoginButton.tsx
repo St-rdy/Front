@@ -1,4 +1,3 @@
-import React from 'react'
 import type { SocialLoginButtonProps } from './SocialLoginButton.types'
 import './SocialLoginButton.css'
 

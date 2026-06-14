@@ -1,4 +1,3 @@
-import React from 'react'
 import SocialLoginButton from '../../../components/SocialLoginButton/SocialLoginButton'
 import './LoginPage.css'
 import { useNavigate } from 'react-router-dom'
