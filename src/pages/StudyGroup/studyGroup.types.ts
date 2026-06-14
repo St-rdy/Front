@@ -5,6 +5,7 @@ export interface StudyGroup {
   category: string
   mode: 'online' | 'offline'
   tags: string[]
+  categoryTags?: string[]
   memberCount: number
   maxMemberCount: number
   thumbnail?: string

@@ -1,0 +1,132 @@
+@import '/src/styles/index.css';
+
+.sg-cat-page {
+  min-height: 100vh;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── 헤더 ────────────────────────────────────────── */
+.sg-cat-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 10;
+}
+
+.sg-cat-header__close {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: none;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.sg-cat-header__close:active {
+  background-color: #f0f0f0;
+}
+
+/* ── 콘텐츠 영역 ─────────────────────────────────── */
+.sg-cat-content {
+  flex: 1;
+  padding: 8px 20px 140px;
+  overflow-y: auto;
+}
+
+.sg-cat-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #1a1a1a;
+  line-height: 1.45;
+  letter-spacing: -0.5px;
+  margin-bottom: 28px;
+}
+
+.sg-cat-title--highlight {
+  color: var(--color-primary);
+}
+
+/* ── 섹션 ────────────────────────────────────────── */
+.sg-cat-section {
+  margin-bottom: 28px;
+}
+
+.sg-cat-section__title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 12px;
+}
+
+/* ── 태그 ────────────────────────────────────────── */
+.sg-cat-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sg-cat-tag {
+  padding: 8px 16px;
+  border-radius: 100px;
+  border: 1.5px solid #e8e8e8;
+  background: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+  cursor: pointer;
+  letter-spacing: -0.2px;
+  white-space: nowrap;
+  transition:
+    border-color 0.15s,
+    background-color 0.15s,
+    color 0.15s;
+}
+
+.sg-cat-tag:active {
+  background-color: #f5f5f8;
+}
+
+.sg-cat-tag--selected {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ── 하단 확인 버튼 ──────────────────────────────── */
+.sg-cat-footer {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100vw, 24.375rem);
+  padding: 12px 20px 32px;
+  background-color: #fff;
+  border-top: 1px solid #f0f0f0;
+}
+
+.sg-cat-confirm {
+  width: 100%;
+  height: 52px;
+  border-radius: 16px;
+  background-color: var(--color-primary);
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  letter-spacing: -0.3px;
+  box-shadow: 0 4px 16px rgba(var(--color-primary-rgb), 0.28);
+}

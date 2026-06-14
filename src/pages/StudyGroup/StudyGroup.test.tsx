@@ -30,13 +30,30 @@ describe('StudyGroup 페이지 - 로딩 상태', () => {
 
 // ─── 성공 상태 ────────────────────────────────────────────────
 describe('StudyGroup 페이지 - 성공 상태', () => {
-  it('필터 버튼이 표시된다', () => {
+  it('"전체 카테고리" 칩바 버튼이 표시된다', () => {
     renderStudyGroup()
-    expect(screen.getByText('전체')).toBeInTheDocument()
-    expect(screen.getByText('언어학습')).toBeInTheDocument()
-    expect(screen.getByText('취업준비')).toBeInTheDocument()
-    expect(screen.getByText('AI/개발')).toBeInTheDocument()
-    expect(screen.getByText('공부인증')).toBeInTheDocument()
+    expect(screen.getByText('≡ 전체 카테고리')).toBeInTheDocument()
+  })
+
+  it('기본 카테고리 칩이 표시된다', () => {
+    renderStudyGroup()
+    expect(
+      screen.getByRole('button', { name: '온라인 스터디' })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: '오프라인 스터디' })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: '단기 스터디' })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: '면접 준비' })
+    ).toBeInTheDocument()
+  })
+
+  it('배너 타이틀이 표시된다', () => {
+    renderStudyGroup()
+    expect(screen.getByText('함께 공부해요')).toBeInTheDocument()
   })
 
   it('스터디 그룹 카드 목록이 표시된다', async () => {
@@ -44,6 +61,12 @@ describe('StudyGroup 페이지 - 성공 상태', () => {
     for (const group of mockStudyGroups.groups) {
       expect(await screen.findByText(group.title)).toBeInTheDocument()
     }
+  })
+
+  it('섹션 타이틀이 표시된다', async () => {
+    renderStudyGroup()
+    expect(await screen.findByText('이번 주 인기 그룹 🔥')).toBeInTheDocument()
+    expect(screen.getByText('추천 스터디 그룹')).toBeInTheDocument()
   })
 
   it('스터디 그룹 만들기 버튼이 표시된다', () => {

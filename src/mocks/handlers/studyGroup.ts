@@ -14,6 +14,7 @@ export const mockStudyGroups: StudyGroupListResponse = {
       category: 'AI/개발',
       mode: 'online',
       tags: ['AI', '개발', '파이썬'],
+      categoryTags: ['온라인 스터디', '단기 스터디'],
       memberCount: 2,
       maxMemberCount: 5,
       startDate: '2026.02.01',
@@ -27,6 +28,7 @@ export const mockStudyGroups: StudyGroupListResponse = {
       category: '언어학습',
       mode: 'offline',
       tags: ['영어', '회화', '언어'],
+      categoryTags: ['오프라인 스터디', '서울', '단기 스터디'],
       memberCount: 3,
       maxMemberCount: 6,
       startDate: '2026.02.10',
@@ -41,6 +43,7 @@ export const mockStudyGroups: StudyGroupListResponse = {
       category: '취업준비',
       mode: 'online',
       tags: ['코딩테스트', '알고리즘', '취업'],
+      categoryTags: ['온라인 스터디', '면접 준비', '경기'],
       memberCount: 4,
       maxMemberCount: 8,
       startDate: '2026.01.15',
@@ -76,10 +79,15 @@ export const mockStudyGroupDetails: Record<number, StudyGroupDetailResponse> = {
 export const studyGroupHandlers = [
   http.get('/api/studygroup/groups', ({ request }) => {
     const url = new URL(request.url)
-    const category = url.searchParams.get('category')
-    const filtered = !category
-      ? mockStudyGroups.groups
-      : mockStudyGroups.groups.filter(g => g.category === category)
+    const cats = url.searchParams.get('cats')
+    const selectedCats = cats ? cats.split(',').filter(Boolean) : []
+
+    const filtered =
+      selectedCats.length === 0
+        ? mockStudyGroups.groups
+        : mockStudyGroups.groups.filter(g =>
+            g.categoryTags?.some(tag => selectedCats.includes(tag))
+          )
     return HttpResponse.json({ groups: filtered })
   }),
 

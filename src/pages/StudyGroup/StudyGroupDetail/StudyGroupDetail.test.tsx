@@ -34,11 +34,6 @@ describe('StudyGroupDetail 페이지 - 로딩 상태', () => {
 
 // ─── 성공 상태 ────────────────────────────────────────────────
 describe('StudyGroupDetail 페이지 - 성공 상태', () => {
-  it('헤더 타이틀이 표시된다', () => {
-    renderStudyGroupDetail()
-    expect(screen.getByText('스터디 그룹')).toBeInTheDocument()
-  })
-
   it('뒤로가기 버튼이 표시된다', () => {
     renderStudyGroupDetail()
     expect(screen.getByAltText('뒤로')).toBeInTheDocument()
@@ -61,10 +56,10 @@ describe('StudyGroupDetail 페이지 - 성공 상태', () => {
     expect(screen.getByText(group.hostName)).toBeInTheDocument()
   })
 
-  it('참여 신청하기 버튼이 표시된다', async () => {
+  it('가입 신청하기 버튼이 표시된다', async () => {
     renderStudyGroupDetail()
     await screen.findByText(group.title)
-    expect(screen.getByText('참여 신청하기')).toBeInTheDocument()
+    expect(screen.getByText('가입 신청하기')).toBeInTheDocument()
   })
 })
 

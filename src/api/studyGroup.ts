@@ -7,11 +7,16 @@ import type {
 } from '../pages/StudyGroup/studyGroup.types'
 
 export async function fetchStudyGroups(
-  category?: string
+  categories?: string[]
 ): Promise<StudyGroupListResponse> {
   const { data } = await apiClient.get<StudyGroupListResponse>(
     '/studygroup/groups',
-    { params: category ? { category } : undefined }
+    {
+      params:
+        categories && categories.length > 0
+          ? { cats: categories.join(',') }
+          : undefined,
+    }
   )
   return data
 }

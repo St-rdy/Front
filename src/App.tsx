@@ -10,6 +10,7 @@ import StudyGroupPage from './pages/StudyGroup/StudyGroup'
 import StudyGroupDetail from './pages/StudyGroup/StudyGroupDetail/StudyGroupDetail'
 import StudyGroupCreate from './pages/StudyGroup/StudyGroupCreate/StudyGroupCreate'
 import StudyGroupApply from './pages/StudyGroup/StudyGroupApply/StudyGroupApply'
+import StudyGroupCategory from './pages/StudyGroup/StudyGroupCategory/StudyGroupCategory'
 import Chat from './pages/Chat'
 import User from './pages/User'
 import LoginPage from './pages/auth/LoginPage/LoginPage'
@@ -48,6 +49,7 @@ function App() {
         <Route path="/community/write" element={<CommunityWrite />} />
         <Route path="/studygroup/:id" element={<StudyGroupDetail />} />
         <Route path="/studygroup/create" element={<StudyGroupCreate />} />
+        <Route path="/studygroup/category" element={<StudyGroupCategory />} />
         <Route path="/studygroup/:id/apply" element={<StudyGroupApply />} />
         <Route path="/auth/onboarding" element={<OnBoardingPage />} />
         <Route path="/auth/login" element={<LoginPage />} />
