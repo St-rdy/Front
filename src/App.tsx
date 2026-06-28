@@ -17,6 +17,8 @@ import LoginPage from './pages/auth/LoginPage/LoginPage'
 import SignUpPage from './pages/auth/SignUpPage/SignUpPage'
 import SignUpCompletePage from './pages/auth/SignUpComplete/SignUpCompletePage'
 import OnBoardingPage from './pages/auth/OnBoardingPage/OnBoardingPage'
+import StudyManagement from './pages/StudyManagement/StudyManagement'
+import StudyManagementCalendar from './pages/StudyManagement/StudyManagementCalendar/StudyManagementCalendar'
 
 // 회원가입, 로그인을 제외한 나머지 모든 페이지에선 헤더와 푸터가 보이게 MainLayout 컴포넌트를 만들어 라우팅을 지정
 // Outlet이란 Outlet 자리에 자식의 컴포넌트가 랜더링 되는 것을 의미한다.
@@ -43,6 +45,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/user" element={<User />} />
+          <Route path="/study" element={<StudyManagement />} />
         </Route>
 
         <Route path="/community/:id" element={<CommunityDetail />} />
@@ -51,6 +54,7 @@ function App() {
         <Route path="/studygroup/create" element={<StudyGroupCreate />} />
         <Route path="/studygroup/category" element={<StudyGroupCategory />} />
         <Route path="/studygroup/:id/apply" element={<StudyGroupApply />} />
+        <Route path="/study/calendar" element={<StudyManagementCalendar />} />
         <Route path="/auth/onboarding" element={<OnBoardingPage />} />
         <Route path="/auth/login" element={<LoginPage />} />
         <Route path="/auth/signup" element={<SignUpPage />} />
