@@ -9,6 +9,7 @@ import {
 } from '../api/studyManagement'
 
 export const SM_KEYS = {
+  schedulesPrefix: ['study', 'schedules'] as const,
   schedules: (date: string) => ['study', 'schedules', date] as const,
   goals: ['study', 'goals'] as const,
   stats: ['study', 'stats'] as const,
@@ -25,7 +26,8 @@ export function useAddSchedule() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: addSchedule,
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['study', 'schedules'] }),
+    onSuccess: () =>
+      qc.invalidateQueries({ queryKey: SM_KEYS.schedulesPrefix }),
   })
 }
 
@@ -33,7 +35,8 @@ export function useDeleteSchedule() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: deleteSchedule,
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['study', 'schedules'] }),
+    onSuccess: () =>
+      qc.invalidateQueries({ queryKey: SM_KEYS.schedulesPrefix }),
   })
 }
 

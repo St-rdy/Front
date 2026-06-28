@@ -118,15 +118,6 @@
 .smc-day--sat:not(.smc-day--selected) .smc-day__num {
   color: #3b82f6;
 }
-.smc-day__dot {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background-color: var(--color-primary);
-}
-.smc-day--selected .smc-day__dot {
-  background-color: rgba(255, 255, 255, 0.7);
-}
 .smc-footer {
   padding: 16px 16px 40px;
   border-top: 1px solid #f0f0f0;

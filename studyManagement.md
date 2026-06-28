@@ -67,12 +67,11 @@
 7. localStorage 복원 (10초 경과 재현)
 8. pause() 후 localStorage 제거
 
-### `src/pages/StudyManagement/StudyManagement.test.tsx` (15개)
-- 탭 렌더링: 4개 탭 표시, 기본 활성 탭, 탭 전환 (3개)
+### `src/pages/StudyManagement/StudyManagement.test.tsx` (17개)
+- 탭 렌더링: 4개 탭 표시, 기본 활성 탭, 탭 전환 (5개)
 - 일정 탭: 일정 표시, FAB 표시, 모달 열기/닫기, 빈 상태 (5개)
 - 학습통계 탭: 카드 표시, 수치 표시 (2개)
-- 목표달성 탭: 목표 표시, FAB 표시, 모달 열기, 진행률 표시 (4개)
-- 에러 상태: API 실패 (1개)
+- 목표달성 탭: 목표 표시, FAB 표시, 모달 열기, 진행률 75%/33% (5개)
 
 ### `src/pages/StudyManagement/StudyManagementCalendar/StudyManagementCalendar.test.tsx` (8개)
 1. 현재 연도·월 표시
