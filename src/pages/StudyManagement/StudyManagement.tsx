@@ -236,7 +236,7 @@ function TimerTab({ scheduleSubjects }: { scheduleSubjects: string[] }) {
             <button
               className="sm-timer-btn sm-timer-btn--start"
               style={{ flex: 1 }}
-              onClick={pause}
+              onClick={reset}
             >
               STOP
             </button>
