@@ -25,6 +25,7 @@ export default [
         ecmaVersion: 2020,
         sourceType: 'module',
         project: './tsconfig.eslint.json',
+        tsconfigRootDir: import.meta.dirname,
       },
       globals: {
         console: 'readonly',

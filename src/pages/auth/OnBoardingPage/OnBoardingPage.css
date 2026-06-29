@@ -1,0 +1,119 @@
+@import '/src/styles/index.css';
+
+/* 전체 컨테이너 */
+.onboarding-container {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* 슬라이드 바깥 감싸는 영역  */
+.onboarding-slide-wrapper {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 슬라이드 전체 트랙*/
+.onboarding-slide-track {
+  display: flex;
+  width: calc(100% * 3);
+  height: 100%;
+  transition: transform 0.4s ease;
+}
+
+/* 슬라이드 하나 */
+.onboarding-slide {
+  width: calc(100% / 3);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--spacing-main-padding);
+  text-align: center;
+  gap: var(--spacing-24);
+}
+
+/* 슬라이드 이미지 */
+.onboarding-image {
+  width: 80%;
+  max-width: 300px;
+}
+
+/* 슬라이드 제목 */
+.onboarding-title {
+  font-size: var(--font-size-subtitle);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-normal);
+}
+
+.onboarding-title-highlight {
+  color: var(--color-primary);
+}
+
+/* 슬라이드 설명 */
+.onboarding-describe {
+  font-size: var(--font-size-main);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  white-space: pre-line;
+}
+
+/* 하단 고정 영역 */
+.onboarding-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-24);
+  padding: var(--spacing-24) var(--spacing-main-padding);
+}
+
+/* 인디케이터 점 묶음 */
+.onboarding-indicators {
+  display: flex;
+  gap: var(--spacing-8);
+}
+
+/* 인디케이터 점 기본 */
+.onboarding-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-gray-300);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* 활성화된 인디케이터 점 */
+.onboarding-dot--active {
+  background-color: var(--color-primary);
+}
+
+/* 버튼 컨테이너 */
+.onboarding-button-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  width: 100%;
+}
+
+/* 버튼 공통 */
+.onboarding-button {
+  width: 100%;
+  padding: var(--spacing-item-gap) 0 0;
+  font-size: var(--font-size-subtitle);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  border: none;
+}
+
+/* 시작하기 */
+.onboarding-button--primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  padding-bottom: var(--spacing-item-gap);
+}

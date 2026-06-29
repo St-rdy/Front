@@ -1,4 +1,3 @@
-import React from 'react'
 import type { ListProps, ChatItem, PostItem } from './List.types'
 import './List.css'
 

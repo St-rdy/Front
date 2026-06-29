@@ -1,0 +1,38 @@
+@import '/src/styles/index.css';
+
+.filter-bar {
+  display: flex;
+  gap: var(--spacing-8);
+  padding: var(--spacing-12) var(--spacing-main-padding);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.filter-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-bar__item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  padding: var(--spacing-8) var(--spacing-16);
+  border-radius: 999px;
+  border: 1px solid var(--color-border-medium);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-main);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.filter-bar__item--active {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+.filter-bar__icon {
+  font-size: var(--font-size-sub);
+}
