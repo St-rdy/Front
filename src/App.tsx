@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Outlet } from 'react-router-dom' // 회원가입, 로그인 때 헤더와 푸터를 숨기기 위해 Outlet을 사용
-import Footer from './layouts/Footer/Footer'
+import Footer from './layouts/footer/Footer'
 import Header from './layouts/header/Header'
 import Community from './pages/Community/Community'
 import CommunityDetail from './pages/Community/CommunityDetail/CommunityDetail'
