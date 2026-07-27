@@ -3,6 +3,7 @@ import { communityHandlers } from './community'
 import { communityDetailHandlers } from './communityDetail'
 import { studyGroupHandlers } from './studyGroup'
 import { studyManagementHandlers } from './studyManagement'
+import { notificationHandlers } from './notification'
 
 // 모든 핸들러 통합
 export const handlers = [
@@ -11,4 +12,5 @@ export const handlers = [
   ...communityDetailHandlers,
   ...studyGroupHandlers,
   ...studyManagementHandlers,
+  ...notificationHandlers,
 ]
