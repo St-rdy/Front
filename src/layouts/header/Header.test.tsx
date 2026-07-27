@@ -83,4 +83,17 @@ describe('Header - 알림', () => {
 
     expect(screen.queryByText('새 메시지')).not.toBeInTheDocument()
   })
+
+  it('패널에서 모두 읽음 처리하면 종 아이콘이 알림있음에서 알림으로 바뀐다', async () => {
+    const user = userEvent.setup()
+    renderHeader()
+    const bellBtn = await screen.findByAltText('알림있음')
+    await user.click(bellBtn)
+    await screen.findByText('새 메시지')
+
+    await user.click(screen.getByText('모두 읽음'))
+
+    expect(await screen.findByAltText('알림')).toBeInTheDocument()
+    expect(screen.queryByAltText('알림있음')).not.toBeInTheDocument()
+  })
 })

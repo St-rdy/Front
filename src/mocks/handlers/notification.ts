@@ -4,7 +4,7 @@ import type {
   NotificationListResponse,
 } from '../../components/NotificationPanel/NotificationPanel.types'
 
-export const mockNotifications: Notification[] = [
+const mockNotifications: Notification[] = [
   {
     id: 1,
     targetUserId: 1,
