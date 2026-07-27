@@ -1,11 +1,16 @@
 import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import NotificationPanel from '../../components/NotificationPanel/NotificationPanel'
+import { useNotifications } from '../../hooks/useNotification'
 import './Header.css'
 
 const Header: React.FC = () => {
   const location = useLocation()
   const [isSearching, setIsSearching] = useState(false)
   const [searchText, setSearchText] = useState('')
+  const [isNotifOpen, setIsNotifOpen] = useState(false)
+  const { data } = useNotifications()
+  const hasUnread = (data?.unread_count ?? 0) > 0
 
   // url 경로에 따른 헤더 메뉴 이름 변경
   const titles: Record<string, string> = {
@@ -68,14 +73,31 @@ const Header: React.FC = () => {
               <button className="search" onClick={() => setIsSearching(true)}>
                 <img src="/Header/search.svg" alt="검색" />
               </button>
-              <button className="alert">
-                <img src="/Header/alert.svg" alt="알림" />
-                {/* <img src="/Header/alert_on.svg" alt="알림있음" /> */}
+              <button
+                className="alert"
+                onClick={() => setIsNotifOpen(prev => !prev)}
+              >
+                {hasUnread ? (
+                  <img src="/Header/alert_on.svg" alt="알림있음" />
+                ) : (
+                  <img src="/Header/alert.svg" alt="알림" />
+                )}
               </button>
             </div>
           </>
         )}
       </div>
+
+      {isNotifOpen && (
+        <>
+          <div
+            className="notification-backdrop"
+            data-testid="notification-backdrop"
+            onClick={() => setIsNotifOpen(false)}
+          />
+          <NotificationPanel />
+        </>
+      )}
     </header>
   )
 }

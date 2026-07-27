@@ -90,3 +90,12 @@
 .clear-btn {
   margin-left: -1.8rem;
 }
+
+.notification-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
