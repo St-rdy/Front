@@ -102,6 +102,32 @@ describe('NotificationPanel - 전체 읽음 처리', () => {
   })
 
   it('안읽음이 없으면 "모두 읽음" 버튼이 비활성화된다', async () => {
+    // 모두 읽은 상태를 이 테스트 안에서 직접 만들어 줍니다.
+    server.use(
+      http.get('/api/v1/notifications', () =>
+        HttpResponse.json({
+          status: 200,
+          code: 'OK',
+          message: '조회 성공',
+          data: {
+            pagination: { page: 1, limit: 20, total: 1 },
+            notifications: [
+              {
+                id: 1,
+                targetUserId: 1,
+                type: 'chat',
+                title: '새 메시지',
+                body: '김철수님이 메시지를 보냈습니다.',
+                is_read: true,
+                created_at: '2026-07-26T09:00:00',
+              },
+            ],
+            unread_count: 0,
+          },
+        })
+      )
+    )
+
     renderPanel()
     await screen.findByText('새 메시지')
     expect(screen.getByText('모두 읽음')).toBeDisabled()

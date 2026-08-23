@@ -92,7 +92,16 @@ describe('StudyManagement - 일정 탭', () => {
   })
 
   it('일정 없을 때 빈 상태 메시지가 표시된다', async () => {
-    server.use(http.get('/api/study/schedules', () => HttpResponse.json([])))
+    server.use(
+      http.get('/api/v1/study/schedules', () =>
+        HttpResponse.json({
+          status: 200,
+          code: 'SUCCESS',
+          message: '조회 성공',
+          data: [],
+        })
+      )
+    )
     renderPage()
     expect(await screen.findByText('이 날은 일정이 없어요')).toBeInTheDocument()
   })

@@ -1,22 +1,13 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { http, HttpResponse } from 'msw'
 import { server } from '../../mocks/server'
+import { renderWithProviders } from '../../test/renderWithProviders'
 import Home from './Home'
 
-// 각 테스트마다 새 QueryClient 생성 (캐시 오염 방지, 재시도 비활성화)
+// Home은 카드 클릭 시 라우팅을 하므로 Router 컨텍스트가 필요합니다.
 function renderHome() {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: { retry: false },
-    },
-  })
-  return render(
-    <QueryClientProvider client={queryClient}>
-      <Home />
-    </QueryClientProvider>
-  )
+  return renderWithProviders(<Home />)
 }
 
 // ─── 로딩 상태 ────────────────────────────────────────────────────
@@ -88,7 +79,7 @@ describe('Home 페이지 - 에러 상태', () => {
   it('API 실패 시 에러 메시지를 보여준다', async () => {
     // 이 테스트에서만 핸들러를 에러 응답으로 오버라이드
     server.use(
-      http.get('/api/home/summary', () => {
+      http.get('/api/v1/home/summary', () => {
         return HttpResponse.error()
       })
     )

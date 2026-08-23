@@ -67,7 +67,7 @@ describe('StudyGroupDetail 페이지 - 성공 상태', () => {
 describe('StudyGroupDetail 페이지 - 에러 상태', () => {
   it('API 실패 시 에러 메시지를 보여준다', async () => {
     server.use(
-      http.get('/api/studygroup/groups/:id', () => HttpResponse.error())
+      http.get('/api/v1/studygroup/groups/:id', () => HttpResponse.error())
     )
     renderStudyGroupDetail()
     await waitFor(() => {

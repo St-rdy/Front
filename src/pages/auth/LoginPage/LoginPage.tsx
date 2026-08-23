@@ -1,21 +1,26 @@
 import SocialLoginButton from '../../../components/SocialLoginButton/SocialLoginButton'
 import './LoginPage.css'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useSocialLogin } from '../../../hooks/useAuth'
+import type { SocialProvider } from '../../../types/auth'
 
 export default function LoginPage() {
   const navigate = useNavigate()
-  function handleClick(props: string) {
-    if (props === 'kakao') {
-      console.log('카카오 로그인')
-    }
-    if (props === 'naver') {
-      console.log('네이버 로그인')
-    }
-    if (props === 'google') {
-      console.log('구글 로그인')
-    }
-    navigate('/auth/signup')
+  const location = useLocation()
+  const login = useSocialLogin()
+
+  // 보호된 화면에서 튕겨온 경우 원래 가려던 곳으로 돌려보냅니다.
+  const from = (location.state as { from?: string } | null)?.from ?? '/'
+
+  function handleClick(provider: SocialProvider) {
+    login.mutate(provider, {
+      onSuccess: result => {
+        // 프로필이 없는 신규 계정이면 회원가입 화면으로
+        navigate(result.isNewUser ? '/auth/signup' : from, { replace: true })
+      },
+    })
   }
+
   return (
     <div className="login-container">
       <div>
@@ -33,17 +38,25 @@ export default function LoginPage() {
         />
       </div>
       <div className="login-button-container">
+        {login.isError && (
+          <p className="login-error" role="alert">
+            로그인에 실패했어요. 잠시 후 다시 시도해주세요.
+          </p>
+        )}
         <SocialLoginButton
           variant="kakao"
           onClick={() => handleClick('kakao')}
+          disabled={login.isPending}
         />
         <SocialLoginButton
           variant="naver"
           onClick={() => handleClick('naver')}
+          disabled={login.isPending}
         />
         <SocialLoginButton
           variant="google"
           onClick={() => handleClick('google')}
+          disabled={login.isPending}
         />
       </div>
     </div>

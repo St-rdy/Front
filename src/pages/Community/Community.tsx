@@ -2,7 +2,7 @@ import { useState } from 'react'
 import FilterBar from '../../components/FilterBar/FilterBar'
 import { useCommunityPosts } from '../../hooks/useCommunity'
 import type { CommunityPost } from './community.types'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import './Community.css'
 
 const CATEGORIES = ['전체', '취업 준비', '공부 인증', '스터디 그룹']
@@ -50,9 +50,21 @@ function PostCard({ post }: { post: CommunityPost }) {
 
 export default function Community() {
   const [selectedCategory, setSelectedCategory] = useState('전체')
-  const { data, isLoading, isError } = useCommunityPosts(selectedCategory)
+  const [searchParams, setSearchParams] = useSearchParams()
+  // 헤더 검색에서 넘어온 검색어
+  const keyword = searchParams.get('q') ?? ''
+  const { data, isLoading, isError } = useCommunityPosts(
+    selectedCategory,
+    keyword
+  )
 
   const navigate = useNavigate()
+
+  // 검색 결과 화면에서 검색어만 지웁니다.
+  function clearKeyword() {
+    searchParams.delete('q')
+    setSearchParams(searchParams, { replace: true })
+  }
 
   const handleWriteClick = () => {
     navigate('/community/write')
@@ -60,6 +72,20 @@ export default function Community() {
 
   return (
     <div className="community-page">
+      {keyword && (
+        <div className="community-search-bar">
+          <span className="community-search-bar__text">
+            <b>{keyword}</b> 검색 결과
+          </span>
+          <button
+            className="community-search-bar__clear"
+            onClick={clearKeyword}
+          >
+            검색 해제
+          </button>
+        </div>
+      )}
+
       <FilterBar
         categories={CATEGORIES}
         selected={selectedCategory}
@@ -74,7 +100,11 @@ export default function Community() {
       {data && (
         <div className="community-list">
           {data.posts.length === 0 ? (
-            <p className="community-state">게시글이 없습니다.</p>
+            <p className="community-state">
+              {keyword
+                ? `'${keyword}'에 대한 검색 결과가 없습니다.`
+                : '게시글이 없습니다.'}
+            </p>
           ) : (
             data.posts.map((post: CommunityPost) => (
               <PostCard key={post.id} post={post} />

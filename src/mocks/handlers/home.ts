@@ -1,4 +1,5 @@
-import { http, HttpResponse } from 'msw'
+import { http } from 'msw'
+import { ok } from '../envelope'
 import type { HomeSummaryResponse } from '../../types/home'
 
 // 임시 mock 데이터 (메인 페이지)
@@ -37,7 +38,5 @@ const mockHomeSummary: HomeSummaryResponse = {
 
 // 메인 페이지 API 라우터
 export const homeHandlers = [
-  http.get('/api/home/summary', () => {
-    return HttpResponse.json(mockHomeSummary)
-  }),
+  http.get('/api/v1/home/summary', () => ok(mockHomeSummary)),
 ]

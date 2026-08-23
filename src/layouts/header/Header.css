@@ -97,3 +97,66 @@
   z-index: 90;
   background: transparent;
 }
+
+.search-submit {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 0 0 var(--spacing-8);
+  display: flex;
+  align-items: center;
+}
+
+/* 최근 검색어 패널 */
+.search-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 95;
+  background-color: var(--color-bg-primary);
+  border-bottom: 1px solid var(--color-border-light);
+  padding: var(--spacing-16);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+}
+
+.search-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search-panel__title {
+  font-size: var(--font-size-sub);
+  font-weight: var(--font-weight-bold);
+}
+
+.search-panel__clear {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: var(--font-size-label);
+  color: var(--color-text-secondary);
+}
+
+.search-panel__empty {
+  font-size: var(--font-size-main);
+  color: var(--color-text-tertiary);
+}
+
+.search-panel__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-8);
+}
+
+.search-panel__chip {
+  border: 1px solid var(--color-border-light);
+  background-color: var(--color-bg-primary);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: var(--font-size-main);
+  cursor: pointer;
+}

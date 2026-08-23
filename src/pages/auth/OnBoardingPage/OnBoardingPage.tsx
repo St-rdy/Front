@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { markOnboardingSeen } from '../../../utils/onboarding'
 import './OnBoardingPage.css'
 
 const SLIDES = [
@@ -119,7 +120,11 @@ export default function OnBoardingPage() {
         <div className="onboarding-button">
           <button
             className="onboarding-button onboarding-button--primary"
-            onClick={() => navigate('/auth/login')}
+            onClick={() => {
+              // 한 번 본 뒤에는 다시 접속해도 로그인 화면으로 바로 갑니다.
+              markOnboardingSeen()
+              navigate('/auth/login')
+            }}
           >
             시작하기
           </button>

@@ -1,0 +1,238 @@
+@import '/src/styles/index.css';
+
+.uc-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--color-bg-primary);
+}
+
+.uc-header {
+  display: grid;
+  grid-template-columns: 2rem 1fr 2rem;
+  align-items: center;
+  padding: var(--spacing-16);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.uc-header__back {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.uc-header__title {
+  text-align: center;
+  font-size: var(--font-size-sub);
+  font-weight: var(--font-weight-bold);
+}
+
+.uc-state {
+  padding: var(--spacing-40) var(--spacing-16);
+  text-align: center;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-main);
+}
+
+.uc-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-12) var(--spacing-16);
+  font-size: var(--font-size-main);
+  color: var(--color-text-secondary);
+}
+
+.uc-summary__count {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.uc-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-8);
+  padding: var(--spacing-48) var(--spacing-16);
+}
+
+.uc-empty__emoji {
+  font-size: 2.5rem;
+}
+
+.uc-empty__text {
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-main);
+}
+
+/* 카드 그리드 (게시물 / 북마크) */
+.uc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-12);
+  padding: 0 var(--spacing-16) var(--spacing-24);
+}
+
+.uc-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.uc-card__thumb {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  border: 1px solid var(--color-border-light);
+  border-radius: 8px;
+  background-color: var(--color-bg-tertiary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0;
+}
+
+.uc-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.uc-card__thumb-fallback {
+  font-size: 2rem;
+}
+
+.uc-card__meta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+}
+
+.uc-card__title {
+  font-size: var(--font-size-main);
+  line-height: var(--line-height-tight);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.uc-card__date {
+  font-size: var(--font-size-label);
+  color: var(--color-text-tertiary);
+  margin-top: var(--spacing-4);
+}
+
+.uc-card__option,
+.uc-card__heart {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+/* 리스트 (댓글 / 참여 스터디) */
+.uc-list {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--spacing-24);
+}
+
+.uc-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  padding: var(--spacing-12) var(--spacing-16);
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--color-border-light);
+  cursor: pointer;
+  text-align: left;
+}
+
+.uc-row__thumb {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 8px;
+  background-color: var(--color-bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.uc-row__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  min-width: 0;
+}
+
+.uc-row__title {
+  font-size: var(--font-size-main);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.uc-row__date {
+  font-size: var(--font-size-label);
+  color: var(--color-text-tertiary);
+}
+
+.uc-row__arrow {
+  color: var(--color-text-tertiary);
+}
+
+.uc-study {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  padding: var(--spacing-16);
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--color-border-light);
+  cursor: pointer;
+  text-align: left;
+}
+
+.uc-study__title {
+  font-size: var(--font-size-sub);
+  font-weight: var(--font-weight-bold);
+}
+
+.uc-study__tags {
+  display: flex;
+  gap: var(--spacing-4);
+}
+
+.uc-study__tag {
+  font-size: var(--font-size-label);
+  color: var(--color-primary);
+  background-color: rgba(var(--color-primary-rgb), 0.1);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.uc-study__desc {
+  font-size: var(--font-size-main);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-normal);
+}
+
+.uc-study__meta {
+  font-size: var(--font-size-label);
+  color: var(--color-text-tertiary);
+}

@@ -109,6 +109,8 @@
   font-weight: var(--font-weight-bold);
   cursor: pointer;
   border: none;
+  border-radius: 30px;
+  margin-bottom: var(--spacing-12);
 }
 
 /* 시작하기 */
@@ -116,4 +118,6 @@
   background-color: var(--color-primary);
   color: var(--color-text-inverse);
   padding-bottom: var(--spacing-item-gap);
+  border-radius: 30px;
+  margin-bottom: var(--spacing-12);
 }

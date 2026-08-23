@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { CircularProgress } from '../../components/CircularProgress'
 import { useHomeSummary } from '../../hooks/useHome'
 import './Home.css'
@@ -11,6 +12,7 @@ const STAT_CONFIG = [
 
 const Home: React.FC = () => {
   const { data, isLoading, isError } = useHomeSummary()
+  const navigate = useNavigate()
 
   if (isLoading) {
     return <div className="home-state">불러오는 중...</div>
@@ -42,7 +44,7 @@ const Home: React.FC = () => {
       </div>
 
       {/* 공부하러 가기 버튼 */}
-      <button className="home-study-btn" onClick={() => {}}>
+      <button className="home-study-btn" onClick={() => navigate('/study')}>
         <div className="home-study-btn__left">
           <img
             src="/Footer/study_group.svg"
@@ -67,7 +69,12 @@ const Home: React.FC = () => {
               <span className="home-schedule-item__time">{item.time}</span>
             </div>
           ))}
-          <button className="home-schedule-add">+ 일정 추가</button>
+          <button
+            className="home-schedule-add"
+            onClick={() => navigate('/study')}
+          >
+            + 일정 추가
+          </button>
         </div>
       </section>
 
@@ -75,7 +82,16 @@ const Home: React.FC = () => {
       <section>
         <h2 className="home-section__title">인기 커뮤니티</h2>
         {data.popularCommunity.map(post => (
-          <div key={post.id} className="home-info-card">
+          <div
+            key={post.id}
+            className="home-info-card"
+            role="link"
+            tabIndex={0}
+            onClick={() => navigate(`/community/${post.id}`)}
+            onKeyDown={e => {
+              if (e.key === 'Enter') navigate(`/community/${post.id}`)
+            }}
+          >
             <div className="home-info-card__header">
               <div className="home-info-card__title-row">
                 <img
@@ -103,7 +119,16 @@ const Home: React.FC = () => {
       <section>
         <h2 className="home-section__title">내 스터디 그룹</h2>
         {data.myStudyGroups.map(group => (
-          <div key={group.id} className="home-info-card">
+          <div
+            key={group.id}
+            className="home-info-card"
+            role="link"
+            tabIndex={0}
+            onClick={() => navigate(`/studygroup/${group.id}`)}
+            onKeyDown={e => {
+              if (e.key === 'Enter') navigate(`/studygroup/${group.id}`)
+            }}
+          >
             <div className="home-info-card__header">
               <div className="home-info-card__title-row">
                 <img

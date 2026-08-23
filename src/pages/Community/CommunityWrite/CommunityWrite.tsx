@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { CommunityWriteForm } from './CommunityWrite.types'
+import { useCreateCommunityPost } from '../../../hooks/useCommunity'
 import './CommunityWrite.css'
 
 // 카테고리 선택지 목록 (상수로 분리하여 컴포넌트 외부에 선언)
@@ -9,6 +10,8 @@ const CATEGORIES = ['취업 준비', '공부 인증', '스터디 그룹']
 
 export default function CommunityWrite() {
   const navigate = useNavigate()
+  const createPost = useCreateCommunityPost()
+  const [submitError, setSubmitError] = useState('')
 
   // 파일 input 요소에 직접 접근하기 위한 ref
   // HTML 요소중 input element 타입의 DOM 요소를 참조
@@ -47,8 +50,33 @@ export default function CommunityWrite() {
     ])
   }
 
+  // 제목/내용이 모두 있어야 완료 버튼이 활성화됩니다.
+  const canSubmit =
+    form.title.trim() !== '' &&
+    form.content.trim() !== '' &&
+    !createPost.isPending
+
   function handleSubmit() {
-    navigate(-1)
+    if (!canSubmit) {
+      setSubmitError('제목과 내용을 모두 입력해주세요.')
+      return
+    }
+    setSubmitError('')
+
+    createPost.mutate(
+      {
+        title: form.title.trim(),
+        category: form.category,
+        content: form.content.trim(),
+        // 실제 서비스에서는 이미지 업로드 후 받은 URL을 보냅니다.
+        images: previews,
+      },
+      {
+        onSuccess: post => navigate(`/community/${post.id}`, { replace: true }),
+        onError: () =>
+          setSubmitError('글 등록에 실패했어요. 잠시 후 다시 시도해주세요.'),
+      }
+    )
   }
 
   return (
@@ -59,10 +87,20 @@ export default function CommunityWrite() {
           <img src="/Header/back_arrow.svg" alt="뒤로" />
         </button>
         <h2 className="write-header__title">글 작성</h2>
-        <button className="write-header__done" onClick={handleSubmit}>
-          완료
+        <button
+          className="write-header__done"
+          onClick={handleSubmit}
+          disabled={!canSubmit}
+        >
+          {createPost.isPending ? '등록 중...' : '완료'}
         </button>
       </div>
+
+      {submitError && (
+        <p className="write-error" role="alert">
+          {submitError}
+        </p>
+      )}
 
       <div className="write-body">
         {/* 제목 입력 */}

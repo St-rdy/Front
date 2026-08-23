@@ -36,6 +36,15 @@ const mockNotifications: Notification[] = [
   },
 ]
 
+// 읽음 상태가 테스트 간에 새지 않도록 초기화합니다.
+const seedReadStates = mockNotifications.map(n => n.is_read)
+
+export function resetNotificationMock(): void {
+  mockNotifications.forEach((n, i) => {
+    n.is_read = seedReadStates[i]
+  })
+}
+
 function buildListResponse(): NotificationListResponse {
   return {
     pagination: { page: 1, limit: 20, total: mockNotifications.length },

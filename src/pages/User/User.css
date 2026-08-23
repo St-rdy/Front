@@ -1,0 +1,127 @@
+@import '/src/styles/index.css';
+
+.user-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  padding: var(--spacing-16);
+  padding-bottom: 6rem; /* 하단 탭 높이만큼 여백 */
+}
+
+.user-state {
+  padding: var(--spacing-40) var(--spacing-16);
+  text-align: center;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-main);
+}
+
+/* 프로필 */
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-16);
+  padding: var(--spacing-16);
+  border: 1px solid var(--color-border-light);
+  border-radius: 12px;
+}
+
+.user-avatar {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-avatar--fallback {
+  background-color: var(--color-gray-200);
+}
+
+.user-profile__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.user-profile__nickname {
+  font-size: var(--font-size-sub);
+  font-weight: var(--font-weight-bold);
+}
+
+.user-profile__counts {
+  display: flex;
+  gap: var(--spacing-12);
+  font-size: var(--font-size-label);
+  color: var(--color-text-secondary);
+}
+
+/* 바로가기 */
+.user-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-8);
+  padding: var(--spacing-16);
+  border: 1px solid var(--color-border-light);
+  border-radius: 12px;
+}
+
+.user-shortcut {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-8);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.user-shortcut__emoji {
+  font-size: 1.5rem;
+}
+
+.user-shortcut__label {
+  font-size: var(--font-size-label);
+  color: var(--color-text-secondary);
+}
+
+/* 학습 통계 */
+.user-stats {
+  display: flex;
+  justify-content: space-around;
+  gap: var(--spacing-8);
+  padding: var(--spacing-16);
+  border: 1px solid var(--color-border-light);
+  border-radius: 12px;
+}
+
+/* 메뉴 */
+.user-menus {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-16) var(--spacing-4);
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--color-border-light);
+  cursor: pointer;
+  font-size: var(--font-size-sub);
+  text-align: left;
+}
+
+.user-menu__arrow {
+  color: var(--color-text-tertiary);
+}
+
+.user-menu--logout {
+  color: var(--color-error);
+  border-bottom: none;
+}
+
+.user-menu--logout:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

@@ -212,3 +212,38 @@
   opacity: 0.4;
   cursor: not-allowed;
 }
+
+.sg-apply-error {
+  color: var(--color-error);
+  font-size: var(--font-size-main);
+  margin-bottom: var(--spacing-8);
+  text-align: center;
+}
+
+.sg-apply-page--done {
+  justify-content: center;
+}
+
+.sg-apply-done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-12);
+  padding: var(--spacing-40) var(--spacing-24);
+  text-align: center;
+}
+
+.sg-apply-done__emoji {
+  font-size: 3rem;
+}
+
+.sg-apply-done__title {
+  font-size: var(--font-size-subtitle);
+  font-weight: var(--font-weight-bold);
+}
+
+.sg-apply-done__sub {
+  font-size: var(--font-size-main);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-16);
+}

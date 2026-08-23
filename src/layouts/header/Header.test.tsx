@@ -1,11 +1,19 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
+import { MemoryRouter, useLocation } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import userEvent from '@testing-library/user-event'
 import { http, HttpResponse } from 'msw'
 import { server } from '../../mocks/server'
 import Header from './Header'
+
+// 검색 후 어디로 이동했는지 확인하기 위한 프로브
+function LocationProbe() {
+  const location = useLocation()
+  return (
+    <div data-testid="location">{`${location.pathname}${location.search}`}</div>
+  )
+}
 
 function renderHeader(initialEntries: string[] = ['/']) {
   const queryClient = new QueryClient({
@@ -15,6 +23,7 @@ function renderHeader(initialEntries: string[] = ['/']) {
     <QueryClientProvider client={queryClient}>
       <MemoryRouter initialEntries={initialEntries}>
         <Header />
+        <LocationProbe />
       </MemoryRouter>
     </QueryClientProvider>
   )
@@ -26,6 +35,22 @@ describe('Header 테스트', () => {
     renderHeader(['/studygroup'])
     expect(screen.getByText('스터디그룹')).toBeInTheDocument()
   })
+
+  it('"/study" 경로일 때 "학습관리" 타이틀이 출력', () => {
+    renderHeader(['/study'])
+    expect(screen.getByText('학습관리')).toBeInTheDocument()
+    expect(screen.queryByText('없음')).not.toBeInTheDocument()
+  })
+
+  it.each([
+    ['/', 'Stardy'],
+    ['/community', '커뮤니티'],
+    ['/chat', '채팅'],
+    ['/user', '내정보'],
+  ])('"%s" 경로일 때 "%s" 타이틀이 출력', (path, title) => {
+    renderHeader([path])
+    expect(screen.getByText(title)).toBeInTheDocument()
+  })
   // 2. 검색 모드 테스트
   it('검색 아이콘 클릭 시 검색창 출력', async () => {
     renderHeader()
@@ -34,6 +59,46 @@ describe('Header 테스트', () => {
     await userEvent.click(searchBtn)
     const input = screen.getByPlaceholderText('검색어를 입력해주세요')
     expect(input).toBeInTheDocument()
+  })
+
+  it('검색 모드에서 최근 검색어 영역이 보인다', async () => {
+    const user = userEvent.setup()
+    renderHeader()
+
+    await user.click(screen.getByAltText('검색'))
+
+    expect(screen.getByText('최근 검색어')).toBeInTheDocument()
+    expect(screen.getByText('최근 검색 기록이 없어요')).toBeInTheDocument()
+  })
+
+  it('검색어를 입력하고 Enter를 누르면 커뮤니티 검색 결과로 이동한다', async () => {
+    const user = userEvent.setup()
+    renderHeader()
+
+    await user.click(screen.getByAltText('검색'))
+    await user.type(
+      screen.getByPlaceholderText('검색어를 입력해주세요'),
+      '공부{Enter}'
+    )
+
+    expect(screen.getByTestId('location')).toHaveTextContent(
+      '/community?q=%EA%B3%B5%EB%B6%80'
+    )
+  })
+
+  it('검색한 단어는 최근 검색어로 남는다', async () => {
+    const user = userEvent.setup()
+    renderHeader()
+
+    await user.click(screen.getByAltText('검색'))
+    await user.type(
+      screen.getByPlaceholderText('검색어를 입력해주세요'),
+      '공부{Enter}'
+    )
+
+    // 다시 검색창을 열면 방금 검색어가 칩으로 보입니다.
+    await user.click(screen.getByAltText('검색'))
+    expect(screen.getByRole('button', { name: '공부' })).toBeInTheDocument()
   })
 })
 
