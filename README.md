@@ -7,7 +7,6 @@
 `npm install && npm run dev` 만으로 온보딩 → 로그인 → 회원가입 → 글쓰기 → 스터디 신청까지 실제로 클릭해볼 수 있습니다.
 
 - 디자인: [Figma - Stardy](https://www.figma.com/design/Z72xaC3fm3831Ev3u1MCx0/Stardy?node-id=287-84)
-- 화면별 동작·유저플로우 상세 문서: [`STARDY-GUIDE.html`](./STARDY-GUIDE.html) (브라우저로 열어서 확인)
 
 ---
 
