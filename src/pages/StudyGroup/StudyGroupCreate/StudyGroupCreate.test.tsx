@@ -1,14 +1,35 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { describe, it, expect } from 'vitest'
-import { MemoryRouter } from 'react-router-dom'
+import { Route } from 'react-router-dom'
+import { http, HttpResponse } from 'msw'
+import { server } from '../../../mocks/server'
+import { renderWithProviders } from '../../../test/renderWithProviders'
 import StudyGroupCreate from './StudyGroupCreate'
 
+// 완료 시 서버로 POST를 보내므로 React Query 컨텍스트가 필요합니다.
 function renderStudyGroupCreate() {
-  return render(
-    <MemoryRouter>
-      <StudyGroupCreate />
-    </MemoryRouter>
+  return renderWithProviders(<StudyGroupCreate />, {
+    route: '/studygroup/create',
+    path: '/studygroup/create',
+    extraRoutes: (
+      <Route path="/studygroup/:id" element={<div>스터디 상세 화면</div>} />
+    ),
+  })
+}
+
+// 필수값(카테고리 + 제목)을 채우고 마지막 단계까지 이동합니다.
+async function goToLastStepWithValidForm(
+  user: ReturnType<typeof userEvent.setup>
+) {
+  renderStudyGroupCreate()
+  await user.click(screen.getByText('취업 준비'))
+  await user.click(screen.getByText('다음'))
+  await user.type(
+    screen.getByPlaceholderText('스터디 제목을 입력하세요'),
+    '테스트 스터디'
   )
+  await user.click(screen.getByText('다음'))
 }
 
 // ─── Step 1 ────────────────────────────────────────────────
@@ -99,5 +120,49 @@ describe('StudyGroupCreate 페이지 - Step 3', () => {
   it('완료 버튼이 표시된다', () => {
     goToStep3()
     expect(screen.getByText('완료')).toBeInTheDocument()
+  })
+})
+
+// ─── 생성 요청 ────────────────────────────────────────────────
+describe('StudyGroupCreate 페이지 - 생성 요청', () => {
+  it('필수값을 채우면 완료 버튼이 활성화된다', async () => {
+    const user = userEvent.setup()
+    await goToLastStepWithValidForm(user)
+    expect(screen.getByRole('button', { name: '완료' })).not.toBeDisabled()
+  })
+
+  it('제목이 없으면 완료 버튼이 비활성화된다', async () => {
+    const user = userEvent.setup()
+    renderStudyGroupCreate()
+    await user.click(screen.getByText('취업 준비'))
+    await user.click(screen.getByText('다음'))
+    await user.click(screen.getByText('다음'))
+
+    expect(screen.getByRole('button', { name: '완료' })).toBeDisabled()
+  })
+
+  it('완료를 누르면 생성된 스터디 상세로 이동한다', async () => {
+    const user = userEvent.setup()
+    await goToLastStepWithValidForm(user)
+
+    await user.click(screen.getByRole('button', { name: '완료' }))
+
+    expect(await screen.findByText('스터디 상세 화면')).toBeInTheDocument()
+  })
+
+  it('생성이 실패하면 에러 문구를 보여준다', async () => {
+    server.use(
+      http.post('/api/v1/studygroup/groups', () => HttpResponse.error())
+    )
+    const user = userEvent.setup()
+    await goToLastStepWithValidForm(user)
+
+    await user.click(screen.getByRole('button', { name: '완료' }))
+
+    expect(
+      await screen.findByText(
+        '스터디 생성에 실패했어요. 잠시 후 다시 시도해주세요.'
+      )
+    ).toBeInTheDocument()
   })
 })

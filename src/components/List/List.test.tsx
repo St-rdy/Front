@@ -4,11 +4,48 @@ import { describe, it, expect, vi } from 'vitest'
 import List from './List'
 import '@testing-library/jest-dom'
 import type { ChatItem, PostItem } from './List.types'
-import chatItem from './__mocks__/chatItems.json'
-import postItem from './__mocks__/postItems.json'
 
-const chatItems: ChatItem[] = chatItem
-const postItems: PostItem[] = postItem
+// 테스트 픽스처
+// (JSON 파일로 두면 .gitignore의 `src/**/__mocks__` 규칙 때문에 저장소에 올라가지 않아
+//  CI에서 모듈을 찾지 못합니다. 타입 검사도 받을 수 있도록 여기에 직접 정의합니다.)
+const chatItems: ChatItem[] = [
+  {
+    id: 1,
+    name: '홍길동',
+    avatar: '/avatars/hong.png',
+    lastMessage: '안녕하세요!',
+    timestamp: '10:30',
+    unreadCount: 3,
+  },
+  {
+    id: 2,
+    name: '김철수',
+    lastMessage: '오늘 스터디 몇 시예요?',
+    timestamp: '09:15',
+  },
+]
+
+const postItems: PostItem[] = [
+  {
+    id: 1,
+    name: '이영희',
+    avatar: '/avatars/lee.png',
+    title: 'React TDD 정리',
+    detail: '오늘 TDD를 공부했습니다...',
+    timestamp: '2024-01-01',
+    thumbnail: '/thumbnails/react.png',
+    likes: 10,
+    comments: 5,
+    tag: ['React', 'TDD'],
+  },
+  {
+    id: 2,
+    name: '박민수',
+    title: 'Vitest 입문',
+    detail: '테스트 코드를 처음 작성해봤어요.',
+    timestamp: '2024-01-02',
+  },
+]
 
 // 기본 렌더링 테스트
 describe('List 컴포넌트 - 기본 렌더링', () => {

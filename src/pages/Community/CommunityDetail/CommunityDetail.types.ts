@@ -18,3 +18,9 @@ export interface CommunityPostDetail extends CommunityPost {
 export interface CommunityPostDetailResponse {
   post: CommunityPostDetail
 }
+
+// 좋아요 토글 응답
+export interface CommunityLikeResponse {
+  liked: boolean
+  likes: number
+}

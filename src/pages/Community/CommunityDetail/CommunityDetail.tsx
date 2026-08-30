@@ -1,5 +1,10 @@
+import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useCommunityPostDetail } from '../../../hooks/useCommunity'
+import {
+  useCommunityPostDetail,
+  useCreateComment,
+  useToggleLike,
+} from '../../../hooks/useCommunity'
 import type { CommunityComment } from './CommunityDetail.types'
 import './CommunityDetail.css'
 
@@ -29,10 +34,22 @@ function CommentItem({ comment }: { comment: CommunityComment }) {
 
 export default function CommunityDetail() {
   const { id } = useParams<{ id: string }>()
+  const postId = id !== undefined ? Number(id) : undefined
   const navigate = useNavigate()
-  const { data, isLoading, isError } = useCommunityPostDetail(
-    id !== undefined ? Number(id) : undefined
-  )
+  const { data, isLoading, isError } = useCommunityPostDetail(postId)
+
+  const [commentText, setCommentText] = useState('')
+  const createComment = useCreateComment(postId)
+  const toggleLike = useToggleLike(postId)
+
+  function handleCommentSubmit() {
+    const content = commentText.trim()
+    if (!content || createComment.isPending) return
+
+    createComment.mutate(content, {
+      onSuccess: () => setCommentText(''),
+    })
+  }
 
   return (
     <>
@@ -41,7 +58,9 @@ export default function CommunityDetail() {
           <button className="detail-header__back" onClick={() => navigate(-1)}>
             <img src="/Header/back_arrow.svg" alt="뒤로" />
           </button>
-          <h2 className="detail-header__title">스터디</h2>
+          <h2 className="detail-header__title">
+            {data?.post.category ?? '게시글'}
+          </h2>
           <button className="detail-header__options">
             <img src="/Card/card_option.svg" alt="옵션" />
           </button>
@@ -75,10 +94,18 @@ export default function CommunityDetail() {
               <h1 className="detail-post__title">{data.post.title}</h1>
               <p className="detail-post__content">{data.post.content}</p>
               <div className="detail-post__stats">
-                <span className="detail-post__stat">
+                <button
+                  className={`detail-post__stat detail-post__stat--like${
+                    data.post.liked ? ' detail-post__stat--liked' : ''
+                  }`}
+                  onClick={() => toggleLike.mutate()}
+                  disabled={toggleLike.isPending}
+                  aria-pressed={data.post.liked ?? false}
+                  aria-label="좋아요"
+                >
                   <img src="/List/Heart.svg" alt="좋아요" />
                   {data.post.likes}
-                </span>
+                </button>
                 <span className="detail-post__stat">
                   <img src="/List/Chat.svg" alt="댓글" />
                   {data.post.comments}
@@ -87,9 +114,15 @@ export default function CommunityDetail() {
             </div>
 
             <div className="detail-comments">
-              {data.post.commentList.map(comment => (
-                <CommentItem key={comment.id} comment={comment} />
-              ))}
+              {data.post.commentList.length === 0 ? (
+                <p className="detail-comments__empty">
+                  아직 댓글이 없어요. 첫 댓글을 남겨보세요!
+                </p>
+              ) : (
+                data.post.commentList.map(comment => (
+                  <CommentItem key={comment.id} comment={comment} />
+                ))
+              )}
             </div>
           </>
         )}
@@ -99,8 +132,20 @@ export default function CommunityDetail() {
             type="text"
             className="detail-comment-input__field"
             placeholder="댓글을 작성하세요"
+            value={commentText}
+            onChange={e => setCommentText(e.target.value)}
+            onKeyDown={e => {
+              if (e.key === 'Enter') handleCommentSubmit()
+            }}
           />
-          <button className="detail-comment-input__send">→</button>
+          <button
+            className="detail-comment-input__send"
+            onClick={handleCommentSubmit}
+            disabled={!commentText.trim() || createComment.isPending}
+            aria-label="댓글 등록"
+          >
+            →
+          </button>
         </div>
       </div>
     </>

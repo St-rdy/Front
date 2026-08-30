@@ -32,6 +32,7 @@ export default function SignUpCompletePage() {
         >
           시작할게요
         </Button>
+        <div className="sign-up-complete-footer"></div>
       </div>
     </>
   )

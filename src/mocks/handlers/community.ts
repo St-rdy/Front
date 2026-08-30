@@ -1,56 +1,71 @@
-import { http, HttpResponse } from 'msw'
-import type { CommunityPostsResponse } from '../../pages/Community/community.types'
+import { http } from 'msw'
+import { ok, fail } from '../envelope'
+import { communityDb, seedPosts } from '../db/community'
+import type {
+  CommunityPost,
+  CommunityPostsResponse,
+  CommunityWriteRequest,
+} from '../../pages/Community/community.types'
 
+// 목록에 필요한 필드만 남깁니다. (commentList 제외)
+function toListItem(post: (typeof communityDb.posts)[number]): CommunityPost {
+  const { commentList: _commentList, ...rest } = post
+  void _commentList
+  return rest
+}
+
+// 테스트에서 참조하는 시드 데이터
 export const mockPosts: CommunityPostsResponse = {
-  posts: [
-    {
-      id: 1,
-      title: '공부 루틴을 꾸준히 유지하는 팁 공유해요',
-      content:
-        '요즘 공부를 시작할 때는 의욕이 넘치는데, 며칠 지나면 흐트러지는 경우가 많네요. 여러분은 어떤 방식으로 공부 루틴을 유지하고 계신가요? 시간 관리 방법이나 작은 습관...',
-      date: '2026.01.07',
-      authorName: '엄박봉',
-      comments: 123,
-      likes: 63,
-      category: '공부 인증',
-    },
-    {
-      id: 2,
-      title: '혼자 공부할 때 집중력 유지하는 방법 있을...',
-      content:
-        '스터디 그룹이 없을 때 혼자 공부하면 자꾸 집중이 흐트러지는 것 같아요. 짧게라도 집중할 수 있는 방법이나 환경 세팅 팁이 있다면 알려주세요!',
-      date: '2026.01.07',
-      authorName: '엄박봉',
-      comments: 123,
-      likes: 63,
-      category: '전체',
-    },
-    {
-      id: 3,
-      title: '취업 준비 같이 하실 분! 🔥',
-      content:
-        '함께 취업 준비하면서 동기부여 받고 싶으신 분들 모여주세요! 매일 인증하고 서로 응원해요.',
-      date: '2026.01.07',
-      authorName: '엄박봉',
-      comments: 123,
-      likes: 63,
-      category: '취업 준비',
-    },
-  ],
+  posts: seedPosts.map(toListItem),
 }
 
 // 커뮤니티 핸들러
 export const communityHandlers = [
-  // http get을 받았을 때 MSW가 요청을 가로챔
-  http.get('/api/community/posts', ({ request }) => {
-    const url = new URL(request.url) // 요청 url (http://localhost:5173/api/community/posts?category=취업준비)
-    const category = url.searchParams.get('category') // url 내부에서 category를 찾음
-    // 카테고리가 없거나, 카테고리가 전체이면 모든 데이터를 제공해주고, 아니라면 filter를 통해 해당하는 카테고리만 보여주게 함
-    const filtered =
-      !category || category === '전체'
-        ? mockPosts.posts
-        : mockPosts.posts.filter(p => p.category === category)
+  // 목록 조회: 카테고리 필터 + 검색어(q)
+  http.get('/api/v1/community/posts', ({ request }) => {
+    const url = new URL(request.url)
+    const category = url.searchParams.get('category')
+    const keyword = url.searchParams.get('q')?.trim().toLowerCase()
 
-    return HttpResponse.json({ posts: filtered }) // 게시글 목록을 반환
+    let filtered = communityDb.posts
+    if (category && category !== '전체') {
+      filtered = filtered.filter(p => p.category === category)
+    }
+    if (keyword) {
+      filtered = filtered.filter(
+        p =>
+          p.title.toLowerCase().includes(keyword) ||
+          p.content.toLowerCase().includes(keyword)
+      )
+    }
+
+    return ok({ posts: filtered.map(toListItem) })
+  }),
+
+  // 글 작성
+  http.post('/api/v1/community/posts', async ({ request }) => {
+    const body = (await request.json()) as CommunityWriteRequest
+
+    if (!body?.title?.trim() || !body?.content?.trim()) {
+      return fail(400, 'INVALID_POST', '제목과 내용을 모두 입력해주세요.')
+    }
+
+    const now = new Date()
+    const created = {
+      id: communityDb.nextPostId++,
+      title: body.title,
+      content: body.content,
+      category: body.category || '전체',
+      date: `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`,
+      authorName: '엄박봉',
+      comments: 0,
+      likes: 0,
+      liked: false,
+      commentList: [],
+    }
+
+    // 최신 글이 목록 맨 위에 오도록 앞에 붙입니다.
+    communityDb.posts.unshift(created)
+    return ok(toListItem(created), { status: 201, code: 'CREATED' })
   }),
 ]

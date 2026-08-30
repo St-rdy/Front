@@ -1,29 +1,31 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { describe, it, expect } from 'vitest'
+import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { MemoryRouter } from 'react-router-dom'
+import { Route } from 'react-router-dom'
+import { renderWithProviders } from '../../../test/renderWithProviders'
 import SignUpPage from './SignUpPage'
 
-const mockNavigate = vi.fn()
+const renderSignUpPage = () =>
+  renderWithProviders(<SignUpPage />, {
+    route: '/auth/signup',
+    path: '/auth/signup',
+    extraRoutes: (
+      <Route path="/auth/signup-complete" element={<div>가입 완료 화면</div>} />
+    ),
+  })
 
-// navigate 함수를 모킹하여 테스트에서 사용할 수 있도록 수정
-vi.mock('react-router', () => ({
-  useNavigate: () => mockNavigate,
-}))
-
-const renderSignUpPage = () => {
-  return render(
-    <MemoryRouter>
-      <SignUpPage />
-    </MemoryRouter>
+// 닉네임 형식 검사 → 서버 중복확인까지 통과시키는 헬퍼
+async function fillValidForm(user: ReturnType<typeof userEvent.setup>) {
+  await user.type(screen.getByPlaceholderText('이름을 입력해주세요.'), '홍길동')
+  await user.type(
+    screen.getByPlaceholderText('닉네임을 입력해주세요.'),
+    'validNick'
   )
+  await user.click(screen.getByRole('button', { name: '중복확인' }))
+  await screen.findByText('사용할 수 있는 닉네임이에요.')
 }
 
 describe('회원가입페이지 테스트', () => {
-  beforeEach(() => {
-    mockNavigate.mockClear()
-  })
-
   describe('랜더링 테스트', () => {
     it('제목이 랜더링 되어야 한다.', () => {
       renderSignUpPage()
@@ -89,7 +91,7 @@ describe('회원가입페이지 테스트', () => {
       ).toBeInTheDocument()
     })
 
-    it('유효한 닉네임 입력 후 중복확인 클릭 시 에러 메시지가 사라진다', async () => {
+    it('유효한 닉네임 입력 후 중복확인 클릭 시 사용 가능 안내가 표시된다', async () => {
       const user = userEvent.setup()
       renderSignUpPage()
       await user.type(
@@ -97,15 +99,27 @@ describe('회원가입페이지 테스트', () => {
         'validNick'
       )
       await user.click(screen.getByRole('button', { name: '중복확인' }))
+
+      expect(
+        await screen.findByText('사용할 수 있는 닉네임이에요.')
+      ).toBeInTheDocument()
       expect(
         screen.queryByText('닉네임을 입력해주세요.')
       ).not.toBeInTheDocument()
+    })
+
+    it('이미 사용 중인 닉네임이면 서버 메시지를 보여준다', async () => {
+      const user = userEvent.setup()
+      renderSignUpPage()
+      await user.type(
+        screen.getByPlaceholderText('닉네임을 입력해주세요.'),
+        'stardy'
+      )
+      await user.click(screen.getByRole('button', { name: '중복확인' }))
+
       expect(
-        screen.queryByText('닉네임은 3자 이상이어야 합니다.')
-      ).not.toBeInTheDocument()
-      expect(
-        screen.queryByText('닉네임은 20자 미만이어야 합니다.')
-      ).not.toBeInTheDocument()
+        await screen.findByText('이미 사용 중인 닉네임이에요.')
+      ).toBeInTheDocument()
     })
   })
 
@@ -147,18 +161,27 @@ describe('회원가입페이지 테스트', () => {
     it('이름, 닉네임 입력 후 중복확인 완료 시 제출 버튼이 활성화된다', async () => {
       const user = userEvent.setup()
       renderSignUpPage()
-      await user.type(
-        screen.getByPlaceholderText('이름을 입력해주세요.'),
-        '홍길동'
-      )
-      await user.type(
-        screen.getByPlaceholderText('닉네임을 입력해주세요.'),
-        'validNick'
-      )
-      await user.click(screen.getByRole('button', { name: '중복확인' }))
+      await fillValidForm(user)
       expect(
         screen.getByRole('button', { name: '입력했어요' })
       ).not.toBeDisabled()
+    })
+
+    it('중복확인 후 닉네임을 고치면 제출 버튼이 다시 비활성화된다', async () => {
+      const user = userEvent.setup()
+      renderSignUpPage()
+      await fillValidForm(user)
+
+      await user.type(
+        screen.getByPlaceholderText('닉네임을 입력해주세요.'),
+        'X'
+      )
+
+      await waitFor(() => {
+        expect(
+          screen.getByRole('button', { name: '입력했어요' })
+        ).toBeDisabled()
+      })
     })
   })
 
@@ -166,17 +189,10 @@ describe('회원가입페이지 테스트', () => {
     it('제출 버튼 클릭 시 완료 페이지로 이동한다', async () => {
       const user = userEvent.setup()
       renderSignUpPage()
-      await user.type(
-        screen.getByPlaceholderText('이름을 입력해주세요.'),
-        '홍길동'
-      )
-      await user.type(
-        screen.getByPlaceholderText('닉네임을 입력해주세요.'),
-        'validNick'
-      )
-      await user.click(screen.getByRole('button', { name: '중복확인' }))
+      await fillValidForm(user)
       await user.click(screen.getByRole('button', { name: '입력했어요' }))
-      expect(mockNavigate).toHaveBeenCalledWith('/auth/signup-complete')
+
+      expect(await screen.findByText('가입 완료 화면')).toBeInTheDocument()
     })
 
     it('중복확인을 안 한 상태에서 제출 버튼 클릭 시 페이지 이동이 되지 않는다', async () => {
@@ -191,7 +207,8 @@ describe('회원가입페이지 테스트', () => {
         'validNick'
       )
       await user.click(screen.getByRole('button', { name: '입력했어요' }))
-      expect(mockNavigate).not.toHaveBeenCalled()
+
+      expect(screen.queryByText('가입 완료 화면')).not.toBeInTheDocument()
     })
   })
 })

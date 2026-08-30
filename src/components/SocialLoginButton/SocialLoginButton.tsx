@@ -23,11 +23,16 @@ const variantConfig = {
 export default function SocialLoginButton({
   variant,
   onClick,
+  disabled = false,
 }: SocialLoginButtonProps) {
   const { className, icon, label } = variantConfig[variant]
   return (
     <>
-      <button className={`social-login-button ${className}`} onClick={onClick}>
+      <button
+        className={`social-login-button ${className}`}
+        onClick={onClick}
+        disabled={disabled}
+      >
         <img
           src={icon}
           alt={`${variant} 아이콘`}

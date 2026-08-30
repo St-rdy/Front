@@ -1,75 +1,52 @@
-import { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import './Footer.css'
-import { useNavigate } from 'react-router-dom'
+
+// 하단 탭 정의 (디자인 순서: 커뮤니티 - 스터디그룹 - 홈 - 채팅 - 내정보)
+const TABS = [
+  { path: '/community', label: '커뮤니티', icon: 'community' },
+  { path: '/studygroup', label: '스터디그룹', icon: 'study_group' },
+  { path: '/', label: '홈', icon: 'home' },
+  { path: '/chat', label: '채팅', icon: 'chat' },
+  { path: '/user', label: '내정보', icon: 'user' },
+] as const
+
+// 현재 경로가 어떤 탭에 속하는지 판단합니다.
+// 상세 화면(/community/3 등)에서도 해당 탭이 활성으로 보이도록 접두사로 비교합니다.
+function getActivePath(pathname: string): string {
+  if (pathname === '/') return '/'
+  const matched = TABS.filter(tab => tab.path !== '/').find(
+    tab => pathname === tab.path || pathname.startsWith(`${tab.path}/`)
+  )
+  // 학습관리(/study)는 하단 탭이 없어 어떤 탭도 활성이 아닙니다.
+  return matched?.path ?? ''
+}
 
 export default function Footer() {
-  const [active, setActive] = useState('home')
   const navigate = useNavigate()
+  const { pathname } = useLocation()
+  const activePath = getActivePath(pathname)
 
   return (
-    <>
-      <div className="footer-container">
-        <nav className="footer-nav">
-          <button
-            className="footer-item"
-            onClick={() => {
-              navigate('/community')
-              setActive('community')
-            }}
-          >
-            {active === 'community' ? (
-              <img src="/Footer/community_fill.svg" alt="커뮤니티" />
-            ) : (
-              <img src="/Footer/community.svg" alt="커뮤니티" />
-            )}
-            커뮤니티
-          </button>
-          <button
-            className="footer-item"
-            onClick={() => {
-              navigate('/studygroup')
-              setActive('study_group')
-            }}
-          >
-            {active === 'study_group' ? (
-              <img src="/Footer/study_group_fill.svg" alt="스터디그룹" />
-            ) : (
-              <img src="/Footer/study_group.svg" alt="스터디그룹" />
-            )}
-            스터디그룹
-          </button>
-          <button
-            className="footer-item"
-            onClick={() => {
-              navigate('/')
-              setActive('home')
-            }}
-          >
-            {active === 'home' ? (
-              <img src="/Footer/home_fill.svg" alt="홈" />
-            ) : (
-              <img src="/Footer/home.svg" alt="홈" />
-            )}
-            홈
-          </button>
-          <button className="footer-item" onClick={() => setActive('chat')}>
-            {active === 'chat' ? (
-              <img src="/Footer/chat_fill.svg" alt="채팅" />
-            ) : (
-              <img src="/Footer/chat.svg" alt="채팅" />
-            )}
-            채팅
-          </button>
-          <button className="footer-item" onClick={() => setActive('user')}>
-            {active === 'user' ? (
-              <img src="/Footer/user_fill.svg" alt="내정보" />
-            ) : (
-              <img src="/Footer/user.svg" alt="내정보" />
-            )}
-            내정보
-          </button>
-        </nav>
-      </div>
-    </>
+    <div className="footer-container">
+      <nav className="footer-nav">
+        {TABS.map(tab => {
+          const isActive = activePath === tab.path
+          return (
+            <button
+              key={tab.path}
+              className={`footer-item${isActive ? ' footer-item--active' : ''}`}
+              aria-current={isActive ? 'page' : undefined}
+              onClick={() => navigate(tab.path)}
+            >
+              <img
+                src={`/Footer/${tab.icon}${isActive ? '_fill' : ''}.svg`}
+                alt={tab.label}
+              />
+              {tab.label}
+            </button>
+          )
+        })}
+      </nav>
+    </div>
   )
 }

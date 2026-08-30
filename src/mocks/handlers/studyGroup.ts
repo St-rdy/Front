@@ -1,5 +1,8 @@
-import { http, HttpResponse } from 'msw'
+import { http } from 'msw'
+import { ok, fail } from '../envelope'
 import type {
+  StudyGroup,
+  StudyGroupCreateForm,
   StudyGroupListResponse,
   StudyGroupDetailResponse,
 } from '../../pages/StudyGroup/studyGroup.types'
@@ -76,8 +79,26 @@ export const mockStudyGroupDetails: Record<number, StudyGroupDetailResponse> = {
   },
 }
 
+// 신청한 그룹 id (신청 완료 후 상세 화면에서 상태를 확인할 수 있게 기억합니다)
+const appliedGroupIds = new Set<number>()
+let nextGroupId = 100
+
+// 생성 테스트가 서로 간섭하지 않도록 시드 스냅샷을 남겨둡니다.
+const seedGroups = [...mockStudyGroups.groups]
+const seedDetailIds = Object.keys(mockStudyGroupDetails).map(Number)
+
+export function resetStudyGroupMock(): void {
+  appliedGroupIds.clear()
+  nextGroupId = 100
+  mockStudyGroups.groups = [...seedGroups]
+  Object.keys(mockStudyGroupDetails)
+    .map(Number)
+    .filter(id => !seedDetailIds.includes(id))
+    .forEach(id => delete mockStudyGroupDetails[id])
+}
+
 export const studyGroupHandlers = [
-  http.get('/api/studygroup/groups', ({ request }) => {
+  http.get('/api/v1/studygroup/groups', ({ request }) => {
     const url = new URL(request.url)
     const cats = url.searchParams.get('cats')
     const selectedCats = cats ? cats.split(',').filter(Boolean) : []
@@ -88,23 +109,68 @@ export const studyGroupHandlers = [
         : mockStudyGroups.groups.filter(g =>
             g.categoryTags?.some(tag => selectedCats.includes(tag))
           )
-    return HttpResponse.json({ groups: filtered })
+    return ok({ groups: filtered })
   }),
 
-  http.get('/api/studygroup/groups/:id', ({ params }) => {
+  http.get('/api/v1/studygroup/groups/:id', ({ params }) => {
     const id = Number(params.id)
     const detail = mockStudyGroupDetails[id]
     if (!detail) {
-      return HttpResponse.json({ message: 'Not Found' }, { status: 404 })
+      return fail(404, 'GROUP_NOT_FOUND', '스터디 그룹을 찾을 수 없습니다.')
     }
-    return HttpResponse.json(detail)
+    return ok(detail)
   }),
 
-  http.post('/api/studygroup/groups', () => {
-    return HttpResponse.json({ success: true }, { status: 201 })
+  // 스터디 그룹 생성
+  http.post('/api/v1/studygroup/groups', async ({ request }) => {
+    const body = (await request.json()) as StudyGroupCreateForm
+
+    if (!body?.title?.trim()) {
+      return fail(400, 'INVALID_GROUP', '스터디 제목을 입력해주세요.')
+    }
+
+    const created: StudyGroup = {
+      id: nextGroupId++,
+      title: body.title,
+      description: body.description,
+      category: body.category,
+      mode: body.mode,
+      tags: body.tags ?? [],
+      categoryTags: [
+        body.mode === 'online' ? '온라인 스터디' : '오프라인 스터디',
+      ],
+      memberCount: 1,
+      maxMemberCount: body.maxMemberCount,
+      startDate: body.startDate,
+      endDate: body.endDate,
+      location: body.location,
+    }
+
+    // 목록과 상세에서 모두 조회되도록 등록합니다.
+    mockStudyGroups.groups.unshift(created)
+    mockStudyGroupDetails[created.id] = {
+      group: { ...created, hostName: '엄박봉', goal: body.goal },
+    }
+
+    return ok(created, { status: 201, code: 'CREATED' })
   }),
 
-  http.post('/api/studygroup/groups/:id/apply', () => {
-    return HttpResponse.json({ success: true }, { status: 201 })
-  }),
+  // 스터디 그룹 신청
+  http.post(
+    '/api/v1/studygroup/groups/:id/apply',
+    async ({ params, request }) => {
+      const id = Number(params.id)
+      if (!mockStudyGroupDetails[id]) {
+        return fail(404, 'GROUP_NOT_FOUND', '스터디 그룹을 찾을 수 없습니다.')
+      }
+
+      const body = (await request.json()) as { motivation?: string }
+      if (!body?.motivation?.trim()) {
+        return fail(400, 'EMPTY_MOTIVATION', '지원 동기를 입력해주세요.')
+      }
+
+      appliedGroupIds.add(id)
+      return ok({ success: true }, { status: 201, code: 'CREATED' })
+    }
+  ),
 ]

@@ -1,0 +1,102 @@
+.notification-panel {
+  position: absolute;
+  top: 100%;
+  right: var(--spacing-8);
+  width: 260px;
+  max-height: 360px;
+  overflow-y: auto;
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border-light);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  z-index: 100;
+}
+
+.notification-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-12) var(--spacing-16);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.notification-panel__title {
+  font-size: var(--font-size-sub);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.notification-panel__read-all {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  padding: 0;
+}
+
+.notification-panel__read-all:disabled {
+  color: var(--color-text-tertiary);
+  cursor: default;
+}
+
+.notification-panel__status {
+  text-align: center;
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-main);
+  padding: var(--spacing-32) var(--spacing-16);
+}
+
+.notification-panel__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.notification-panel__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-8);
+  padding: var(--spacing-12) var(--spacing-16);
+  border-bottom: 1px solid var(--color-border-light);
+  cursor: pointer;
+}
+
+.notification-panel__item:last-child {
+  border-bottom: none;
+}
+
+.notification-panel__item:hover {
+  background-color: var(--color-bg-secondary);
+}
+
+.notification-panel__unread-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.notification-panel__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  min-width: 0;
+}
+
+.notification-panel__item-title {
+  font-size: var(--font-size-main);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.notification-panel__item-body {
+  font-size: var(--font-size-label);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

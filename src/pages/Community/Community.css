@@ -133,3 +133,29 @@
   height: 22px;
   filter: brightness(0) invert(1);
 }
+
+.community-search-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-12) var(--spacing-16);
+  background-color: var(--color-bg-secondary);
+}
+
+.community-search-bar__text {
+  font-size: var(--font-size-main);
+  color: var(--color-text-secondary);
+}
+
+.community-search-bar__text b {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+.community-search-bar__clear {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: var(--font-size-label);
+  color: var(--color-primary);
+}

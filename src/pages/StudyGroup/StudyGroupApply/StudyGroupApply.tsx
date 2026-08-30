@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useStudyGroupDetail } from '../../../hooks/useStudyGroup'
+import {
+  useApplyStudyGroup,
+  useStudyGroupDetail,
+} from '../../../hooks/useStudyGroup'
 import './StudyGroupApply.css'
 
 export default function StudyGroupApply() {
@@ -11,10 +14,44 @@ export default function StudyGroupApply() {
   )
   const [motivation, setMotivation] = useState('')
   const [contact, setContact] = useState('')
+  const [submitError, setSubmitError] = useState('')
+  const [isDone, setIsDone] = useState(false)
+
+  const apply = useApplyStudyGroup(id !== undefined ? Number(id) : undefined)
 
   function handleSubmit() {
-    // TODO: API 연동
-    navigate(-1)
+    if (!motivation.trim() || apply.isPending) return
+    setSubmitError('')
+
+    apply.mutate(
+      { motivation: motivation.trim(), contact: contact.trim() || undefined },
+      {
+        onSuccess: () => setIsDone(true),
+        onError: () =>
+          setSubmitError('신청에 실패했어요. 잠시 후 다시 시도해주세요.'),
+      }
+    )
+  }
+
+  // 신청이 접수되면 결과 화면을 보여줍니다.
+  if (isDone) {
+    return (
+      <div className="sg-apply-page sg-apply-page--done">
+        <div className="sg-apply-done">
+          <p className="sg-apply-done__emoji">🎉</p>
+          <h2 className="sg-apply-done__title">신청이 접수되었어요</h2>
+          <p className="sg-apply-done__sub">
+            스터디장이 확인하면 알림으로 알려드릴게요.
+          </p>
+          <button
+            className="sg-apply-submit"
+            onClick={() => navigate('/studygroup', { replace: true })}
+          >
+            스터디 목록으로
+          </button>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -80,12 +117,17 @@ export default function StudyGroupApply() {
       </div>
 
       <div className="sg-apply-footer">
+        {submitError && (
+          <p className="sg-apply-error" role="alert">
+            {submitError}
+          </p>
+        )}
         <button
           className="sg-apply-submit"
           onClick={handleSubmit}
-          disabled={!motivation.trim()}
+          disabled={!motivation.trim() || apply.isPending}
         >
-          신청 완료
+          {apply.isPending ? '신청 중...' : '신청 완료'}
         </button>
       </div>
     </div>

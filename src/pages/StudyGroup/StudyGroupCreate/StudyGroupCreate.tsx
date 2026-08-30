@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { StudyGroupCreateForm } from '../studyGroup.types'
+import { useCreateStudyGroup } from '../../../hooks/useStudyGroup'
 import './StudyGroupCreate.css'
 
 const CATEGORIES = ['취업 준비', '공부 인증', '스터디 그룹', '언어학습']
@@ -24,6 +25,8 @@ export default function StudyGroupCreate() {
   const [step, setStep] = useState(1)
   const [form, setForm] = useState<StudyGroupCreateForm>(initialForm)
   const [tagInput, setTagInput] = useState('')
+  const [submitError, setSubmitError] = useState('')
+  const createGroup = useCreateStudyGroup()
 
   function handleNext() {
     if (step < TOTAL_STEPS) setStep(prev => prev + 1)
@@ -34,9 +37,26 @@ export default function StudyGroupCreate() {
     else navigate(-1)
   }
 
+  // 제목과 카테고리는 필수입니다.
+  const canSubmit =
+    form.title.trim() !== '' &&
+    form.category.trim() !== '' &&
+    !createGroup.isPending
+
   function handleSubmit() {
-    // TODO: API 연동
-    navigate('/studygroup')
+    if (!canSubmit) {
+      setSubmitError('스터디 제목과 카테고리를 입력해주세요.')
+      return
+    }
+    setSubmitError('')
+
+    createGroup.mutate(form, {
+      // 생성된 그룹 상세로 바로 이동합니다.
+      onSuccess: group =>
+        navigate(`/studygroup/${group.id}`, { replace: true }),
+      onError: () =>
+        setSubmitError('스터디 생성에 실패했어요. 잠시 후 다시 시도해주세요.'),
+    })
   }
 
   function addTag() {
@@ -232,13 +252,22 @@ export default function StudyGroupCreate() {
       </div>
 
       <div className="sg-create-footer">
+        {submitError && (
+          <p className="sg-create-error" role="alert">
+            {submitError}
+          </p>
+        )}
         {step < TOTAL_STEPS ? (
           <button className="sg-create-next" onClick={handleNext}>
             다음
           </button>
         ) : (
-          <button className="sg-create-next" onClick={handleSubmit}>
-            완료
+          <button
+            className="sg-create-next"
+            onClick={handleSubmit}
+            disabled={!canSubmit}
+          >
+            {createGroup.isPending ? '생성 중...' : '완료'}
           </button>
         )}
       </div>

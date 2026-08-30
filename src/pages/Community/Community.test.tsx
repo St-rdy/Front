@@ -8,7 +8,7 @@ import { server } from '../../mocks/server'
 import Community from './Community'
 import { mockPosts } from '../../mocks/handlers/community'
 
-function renderCommunity() {
+function renderCommunity(route = '/community') {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: { retry: false },
@@ -16,7 +16,7 @@ function renderCommunity() {
   })
   return render(
     <QueryClientProvider client={queryClient}>
-      <MemoryRouter>
+      <MemoryRouter initialEntries={[route]}>
         <Community />
       </MemoryRouter>
     </QueryClientProvider>
@@ -74,7 +74,7 @@ describe('Community 페이지 - 성공 상태', () => {
 describe('Community 페이지 - 에러 상태', () => {
   it('API 실패 시 에러 메시지를 보여준다', async () => {
     server.use(
-      http.get('/api/community/posts', () => {
+      http.get('/api/v1/community/posts', () => {
         return HttpResponse.error()
       })
     )
@@ -120,5 +120,46 @@ describe('Community 페이지 - 카테고리 필터링', () => {
     await user.click(screen.getByText('스터디 그룹'))
 
     expect(await screen.findByText('게시글이 없습니다.')).toBeInTheDocument()
+  })
+})
+
+// ─── 검색 ────────────────────────────────────────────────────
+describe('Community 페이지 - 검색', () => {
+  it('검색어가 있으면 검색 결과 안내가 표시된다', async () => {
+    renderCommunity('/community?q=집중력')
+    expect(await screen.findByText('집중력')).toBeInTheDocument()
+    expect(screen.getByText('검색 해제')).toBeInTheDocument()
+  })
+
+  it('검색어와 일치하는 게시글만 남는다', async () => {
+    renderCommunity('/community?q=집중력')
+
+    expect(
+      await screen.findByText('혼자 공부할 때 집중력 유지하는 방법 있을...')
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByText('취업 준비 같이 하실 분! 🔥')
+    ).not.toBeInTheDocument()
+  })
+
+  it('검색 결과가 없으면 안내 문구를 보여준다', async () => {
+    renderCommunity('/community?q=존재하지않는키워드')
+    expect(
+      await screen.findByText(
+        "'존재하지않는키워드'에 대한 검색 결과가 없습니다."
+      )
+    ).toBeInTheDocument()
+  })
+
+  it('검색 해제를 누르면 전체 목록으로 돌아온다', async () => {
+    const user = userEvent.setup()
+    renderCommunity('/community?q=집중력')
+    await screen.findByText('검색 해제')
+
+    await user.click(screen.getByText('검색 해제'))
+
+    expect(
+      await screen.findByText('취업 준비 같이 하실 분! 🔥')
+    ).toBeInTheDocument()
   })
 })
